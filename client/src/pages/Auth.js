@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import Snackbar from '@mui/material/Snackbar';
 import { db } from '../firebase';
 import { auth } from '../firebase';
 import { useHistory } from 'react-router';
 import { LockClosedIcon } from "@heroicons/react/solid";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { collection, getDocs, addDoc, setDoc, doc } from '@firebase/firestore';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth';
+import { collection, getDoc, addDoc, setDoc, doc } from '@firebase/firestore';
 
 const Auth = () => {
   const history = useHistory();
@@ -12,13 +13,28 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [user, setUser] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   useEffect(() => {
     return auth.onAuthStateChanged(user => {
       if (user) {
-        history.push('/');
+        if (user.emailVerified) {
+          history.push('/');
+        }
       }
-    })
+    });
   }, []);
 
   const handleSubmit = async (event) => {
@@ -34,12 +50,26 @@ const Auth = () => {
         console.log(error);
         alert(error.message);
       });
-      const userRef = doc(db, 'users', signUpData.user.uid);
-      await setDoc(userRef, {
-        name: name,
-        email: email,
-        photo: null,
+      setOpen(true);
+      await sendEmailVerification(signUpData.user).then(() => {
+        let interval = setInterval(() => {
+          signUpData.user.reload().then(() => {
+            if (signUpData.user.emailVerified) {
+              clearInterval(interval);
+              const userRef = doc(db, 'users', signUpData.user.uid);
+              setDoc(userRef, {
+                name: name,
+                email: email,
+                photo: null,
+              });
+              history.push('/');
+            } else {
+              console.log('email not verified');
+            }
+          });
+        }, 1000)
       });
+      
     }
   }
 
@@ -160,13 +190,20 @@ const Auth = () => {
                   <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                     <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
                   </span>
-                  Sign in
+                  {signIn ? "Sign In" : "Sign Up"}
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
+     <Snackbar
+      className="fixed bottom-0 mb-4"
+      open={open}
+      autoHideDuration={6000}
+      onClose={handleClose}
+      message="Please verify your email address"
+     /> 
     </>
   );
 };
