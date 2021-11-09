@@ -9,7 +9,6 @@ dotenv.config();
 app.use(cors());
 
 app.use('/service/weather', weatherRoutes);
-console.log(process.env.WEATHER_API_KEY);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
