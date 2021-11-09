@@ -9,7 +9,6 @@ router.get('/:city', async (req, res) => {
   const { city } = req.params;
   await fetch(`${url}${city}&units=metric&appid=${process.env.WEATHER_API_KEY}`).then(response => response.json()).then(data => {
     if (data.main?.temp) {
-      console.log(data)
       res.json({
         temp: data.main.temp,
         feels_like: data.main.feels_like,
@@ -21,7 +20,11 @@ router.get('/:city', async (req, res) => {
         error: 'City not found'
       });
     }
-  })
+  }).catch(error => {
+    res.json({
+      error: 'Something went wrong'
+    });
+  });
 });
 
 export default router;
