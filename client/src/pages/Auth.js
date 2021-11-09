@@ -30,9 +30,7 @@ const Auth = () => {
   useEffect(() => {
     return auth.onAuthStateChanged(user => {
       if (user) {
-        if (user.emailVerified) {
-          history.push('/');
-        }
+        history.push('/');
       }
     });
   }, []);
