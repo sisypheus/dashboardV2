@@ -5,6 +5,7 @@ import { getDoc, collection, addDoc, doc } from '@firebase/firestore';
 import useDarkMode from '../utils/darkMode';
 import Background from '../utils/Background';
 import Navbar from '../components/Navbar';
+import Sidebar from '../components/Sidebar';
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -22,30 +23,22 @@ const Home = () => {
     });
   }, []);
 
-  useDarkMode();
-
   return (
-    <>
       <Background>
         <Navbar />
-        <div className="dark:text-gray-200">
-          <p>Home Page</p>
+        <div className="flex">
+          <Sidebar />
+          
+          <div className="grid grid-cols-5 w-full text-center">
+            <p className="dark:text-white col-span-1">Test</p>
+            <p className="dark:text-white col-span-1">Test</p>
+            <p className="dark:text-white col-span-1">Test</p>
+            <p className="dark:text-white col-span-1">Test</p>
+            <p className="dark:text-white col-span-1">Test</p>
+          </div>
+
         </div>
-        {user ? (
-          <div className="dark:text-gray-200">
-            <p>{user.email}</p>
-            <p>{user.name}</p>
-            <button onClick={() => auth.signOut()} className="border-2 bg-red-600 px-4 py-2 rounded-xl">Sign Out</button>
-          </div>
-        ) : (
-          <div>
-            <Link to="/auth">
-              <button className="border-2 bg-blue-400 px-4 py-2 rounded-lg">Sign In</button>
-            </Link>
-          </div>
-        )}
       </Background>
-    </>
   )
 }
 

@@ -5,7 +5,7 @@ const Navbar = () => {
   const [setTheme, colorTheme] = useDarkMode();
 
   return (
-    <nav className="h-32 bg-blue-800 dark:bg-dark-nav text-gray-200 flex items-center justify-center">
+    <nav className="h-24 relative bg-blue-800 dark:bg-dark-nav text-gray-200 flex items-center justify-center" style={{zIndex: '1400'}}>
       <div className="mr-auto justify-self-start pl-12 opacity-0">
         <p>Test</p>
       </div>

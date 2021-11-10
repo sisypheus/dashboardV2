@@ -4,8 +4,9 @@ module.exports = {
   theme: {
     extend: {
       backgroundColor: {
-        'dark': '#0d1117',
+        'dark-sidebar': '#0d1117',
         'dark-nav': '#161b22',
+        'dark': '#010409'
       }
     }
   },
