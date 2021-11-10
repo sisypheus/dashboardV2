@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       backgroundColor: {
         'dark': '#0d1117',
+        'dark-nav': '#161b22',
       }
     }
   },

@@ -4,6 +4,7 @@ import { auth, db } from '../firebase';
 import { getDoc, collection, addDoc, doc } from '@firebase/firestore';
 import useDarkMode from '../utils/darkMode';
 import Background from '../utils/Background';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -26,6 +27,7 @@ const Home = () => {
   return (
     <>
       <Background>
+        <Navbar />
         <div className="dark:text-gray-200">
           <p>Home Page</p>
         </div>
