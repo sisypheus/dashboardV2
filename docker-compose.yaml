@@ -1,0 +1,13 @@
+version: "3.7"
+services: 
+  back:
+    build: ./server
+    restart: always
+    ports: 
+      - 8080:8080
+    
+  # front:
+  #   build: ./client
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
