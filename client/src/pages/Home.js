@@ -5,6 +5,7 @@ import { getDoc, collection, addDoc, doc } from '@firebase/firestore';
 import Background from '../utils/Background';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
+import Widgets from '../components/Widgets';
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -23,19 +24,21 @@ const Home = () => {
   }, []);
 
   return (
+
       <Background>
         <Navbar />
         <div className="flex">
           <Sidebar user={user} />
           
-          <div className="grid grid-cols-5 w-full text-center">
+          {/* <div className="grid grid-cols-5 w-full text-center">
             <p className="dark:text-white col-span-1">Test</p>
             <p className="dark:text-white col-span-1">Test</p>
             <p className="dark:text-white col-span-1">Test</p>
             <p className="dark:text-white col-span-1">Test</p>
             <p className="dark:text-white col-span-1">Test</p>
-          </div>
+          </div> */}
 
+          <Widgets user={user} />
         </div>
       </Background>
   )
