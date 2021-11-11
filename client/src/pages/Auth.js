@@ -6,6 +6,7 @@ import { useHistory } from 'react-router';
 import { LockClosedIcon } from "@heroicons/react/solid";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth';
 import { collection, getDoc, addDoc, setDoc, doc } from '@firebase/firestore';
+import Background from '../utils/Background';
 
 const Auth = () => {
   const history = useHistory();
@@ -87,31 +88,32 @@ const Auth = () => {
 
   return (
     <>
+    <Background>
       <div className="h-screen">
         <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-md w-full space-y-8">
+          <div className="max-w-lg w-full space-y-8 border-2 border-gray-800 shadow-lg px-8 py-16 rounded-xl dark:bg-dark-sidebar">
             <div>
               <img
                 className="mx-auto h-12 w-auto"
                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                 alt="Workflow"
-              />
+                />
               {signIn ? (
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-300">
                   Sign in to your account
                 </h2>
               ) : (
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-300">
                   Sign up for a new account
                 </h2>
               )}
 
               {signIn ? (
-                <h4 className="text-center text-2xl font-bold">
+                <h4 className="text-center text-2xl font-bold dark:text-gray-200">
                   New user? <a onClick={() => setSignIn(false)} className="cursor-pointer font-black text-indigo-500">Sign Up</a>
                 </h4>
               ) : (
-                <h4 className="text-center text-2xl font-bold">
+                <h4 className="text-center text-2xl font-bold dark:text-gray-200">
                   Got an account? <a onClick={() => setSignIn(true)} className="cursor-pointer font-black text-indigo-500">Sign In</a>
                 </h4>
               )}
@@ -134,11 +136,11 @@ const Auth = () => {
                       placeholder="Full Name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                    />
+                      />
                   </div>
                 ) : (
                   null
-                )}
+                  )}
                 <div>
                   <label htmlFor="email-address" className="sr-only">
                     Email address
@@ -153,7 +155,7 @@ const Auth = () => {
                     placeholder="Email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                  />
+                    />
                 </div>
                 <div>
                   <label htmlFor="password" className="sr-only">
@@ -169,7 +171,7 @@ const Auth = () => {
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                  />
+                    />
                 </div>
               </div>
 
@@ -183,8 +185,8 @@ const Auth = () => {
                 </div>
                 <button
                   type="submit"
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent font-semibold rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
                   <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                     <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
                   </span>
@@ -201,7 +203,8 @@ const Auth = () => {
       autoHideDuration={6000}
       onClose={handleClose}
       message="Please verify your email address"
-     /> 
+      /> 
+      </Background>
     </>
   );
 };

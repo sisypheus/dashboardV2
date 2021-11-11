@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { getDoc, collection, addDoc, doc } from '@firebase/firestore';
-import useDarkMode from '../utils/darkMode';
 import Background from '../utils/Background';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
@@ -27,7 +26,7 @@ const Home = () => {
       <Background>
         <Navbar />
         <div className="flex">
-          <Sidebar />
+          <Sidebar user={user} />
           
           <div className="grid grid-cols-5 w-full text-center">
             <p className="dark:text-white col-span-1">Test</p>
