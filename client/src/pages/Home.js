@@ -24,23 +24,14 @@ const Home = () => {
   }, []);
 
   return (
+    <Background>
+      <Navbar />
+      <div className="flex">
+        <Sidebar user={user} />
 
-      <Background>
-        <Navbar />
-        <div className="flex">
-          <Sidebar user={user} />
-          
-          {/* <div className="grid grid-cols-5 w-full text-center">
-            <p className="dark:text-white col-span-1">Test</p>
-            <p className="dark:text-white col-span-1">Test</p>
-            <p className="dark:text-white col-span-1">Test</p>
-            <p className="dark:text-white col-span-1">Test</p>
-            <p className="dark:text-white col-span-1">Test</p>
-          </div> */}
-
-          <Widgets user={user} />
-        </div>
-      </Background>
+        <Widgets user={user} />
+      </div>
+    </Background>
   )
 }
 
