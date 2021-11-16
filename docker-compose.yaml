@@ -6,8 +6,8 @@ services:
     ports: 
       - 8080:8080
     
-  # front:
-  #   build: ./client
-  #   restart: always
-  #   ports:
-  #     - 3000:3000
+  front:
+    build: ./client
+    restart: always
+    ports:
+      - 3000:3000

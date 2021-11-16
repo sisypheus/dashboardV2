@@ -37,7 +37,7 @@ app.get('/about.json', (req, res) => {
   })
 });
 
-app.get
+process.on('SIGINT', () => (process.exit(1)));
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Example app listening`);
