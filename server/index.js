@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import weatherRoutes from './routes/services/weather.js';
+import currencyRoutes from './routes/services/currency.js';
 
 dotenv.config();
 app.use(cors());
@@ -11,6 +12,7 @@ app.use(cors());
 app.set('trust proxy', true);
 
 app.use('/service/weather', weatherRoutes);
+app.use('/service/currency', currencyRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is up and running')
