@@ -1,13 +1,24 @@
 import React from 'react'
 import useDarkMode from '../utils/darkMode'
+import { useHistory } from 'react-router';
+import { AiOutlineArrowLeft } from 'react-icons/ai'
 
 const Navbar = () => {
   const [setTheme, colorTheme] = useDarkMode();
+  const history = useHistory();
 
   return (
     <nav className="h-24 relative bg-blue-800 dark:bg-dark-nav text-gray-200 flex items-center justify-center"> 
-      <div className="mr-auto justify-self-start pl-12 opacity-0">
-        <p>Test</p>
+      <div className="mr-auto justify-self-start pl-12 flex items-center">
+        { history.location.pathname === '/configure' ? (
+        <div className="bg-gray-700 p-2 cursor-pointer rounded-full">
+          <AiOutlineArrowLeft className="text-2xl font-black" onClick={() => history.goBack()} />
+        </div>
+        ) : (
+        <div className="bg-gray-700 p-2 cursor-pointer rounded-full opacity-0">
+          <AiOutlineArrowLeft className="text-2xl font-black" onClick={() => history.goBack()} />
+        </div>
+        )}
       </div>
       <div className="font-sans tracking-wider font-semibold text-3xl">
         <p>Dashboard</p>

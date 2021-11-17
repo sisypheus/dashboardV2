@@ -52,15 +52,10 @@ const Auth = () => {
       setOpen(true);
       await sendEmailVerification(signUpData.user).then(() => {
         let interval = setInterval(() => {
-          signUpData.user.reload().then(() => {
+          signUpData.user.reload().then(async () => {
             if (signUpData.user.emailVerified) {
               clearInterval(interval);
-              const userRef = doc(db, 'users', signUpData.user.uid);
-              setDoc(userRef, {
-                name: name,
-                email: email,
-                photo: null,
-              });
+              await createUser(signUpData.user);
               history.push('/');
             } else {
               console.log('email not verified');
@@ -72,18 +67,42 @@ const Auth = () => {
     }
   }
 
+  const createUser = async (user) => {
+    const userRef = doc(db, 'users', user.uid);
+    await setDoc(userRef, {
+      name: user.displayName,
+      email: user.email,
+      photo: user.photoURL,
+    });
+
+    const settingsRef = doc(db, `settings/${user.uid}`);
+    await setDoc(settingsRef, {
+      weather: {
+        display: true,
+        city: 'Lille',
+      },
+      currency: {
+        rate: {
+          display: true,
+          currency: 'EUR',
+          to: 'USD',
+        },
+        stock: {
+          display: true,
+          stock: 'TSLA'
+        },
+      }
+    });
+    return;
+  }
+
   const googleSignin = async () => {
     const data = await signInWithPopup(auth, new GoogleAuthProvider()).catch((err) => {
       console.log(err);
       alert(err.message);
     });
 
-    const userRef = doc(db, 'users', data.user.uid);
-    await setDoc(userRef, {
-      name: data.user.displayName,
-      email: data.user.email,
-      photo: data.user.photoURL
-    }, { merge: true });
+   createUser(data.user); 
   }
 
   return (

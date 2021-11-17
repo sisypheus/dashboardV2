@@ -9,14 +9,19 @@ import Widgets from '../components/Widgets';
 
 const Home = () => {
   const [user, setUser] = useState(null);
+  const [settings, setSettings] = useState(null);
 
   useEffect(() => {
     return auth.onAuthStateChanged(user => {
       if (user) {
         const userRef = doc(db, `users/${user.uid}`);
+        const settingsRef = doc(db, 'settings', user.uid);
         getDoc(userRef).then(userDoc => {
           setUser(userDoc.data());
         });
+        getDoc(settingsRef).then(settingsDoc => {
+          setSettings(settingsDoc.data());
+        })
       } else {
         setUser(null);
       }
@@ -29,7 +34,7 @@ const Home = () => {
       <div className="flex">
         <Sidebar user={user} />
 
-        <Widgets user={user} />
+        <Widgets settings={settings} />
       </div>
     </Background>
   )

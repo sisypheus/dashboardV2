@@ -7,7 +7,9 @@ module.exports = {
         'dark-sidebar': '#0d1117',
         'dark-nav': '#161b22',
         'dark': '#010409'
-      }
+      },
+      textColor: ['checked'],
+      color: ['checked'],
     }
   },
   variants: {

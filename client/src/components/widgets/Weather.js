@@ -15,7 +15,7 @@ const Weather = ({city}) => {
       <p>Weather</p>
       <p>{city.charAt(0).toUpperCase() + city.slice(1)}</p>
       <p>{weather?.temp}</p>
-      <img src={'https://openweathermap.org/img/w/' + weather?.icon + '.png'} alt="weather" />
+      { weather?.icon && <img className="w-20" src={'https://openweathermap.org/img/w/' + weather?.icon + '.png'} alt="weather" /> }
     </div>
   )
 }
