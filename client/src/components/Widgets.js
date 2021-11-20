@@ -16,8 +16,8 @@ const Widgets = ({ settings }) => {
   ]
 
   const defaultLayout = [
-    { i: 'weather', x: 0, y: 0, w: 4, h: 6 },
-    { i: 'currency', x: 1, y: 0, w: 3, h: 2 },
+    { i: 'weather', x: 0, y: 0, w: 4, h: 4 },
+    { i: 'currency', x: 4, y: 0, w: 3, h: 3 },
   ]
 
   const getLayout = () => {
@@ -40,12 +40,11 @@ const Widgets = ({ settings }) => {
         </ReactGridLayout>
       ) : (
         <ReactGridLayout isBounded={true} className="layout" layout={getLayout()} cols={12} rowHeight={48}>
-          {/* <div key="weather" className="bg-indigo-300">a</div> */}
-          <div key="weather" className="">
-            <Weather city="lille" />
+          <div key="weather">
+            <Weather city={settings?.weather?.city} display={settings?.weather?.display}/>
           </div>
           <div key="currency">
-            <Currency />
+            <Currency from={settings?.currency?.from} to={settings?.currency?.to} display={settings?.currency?.display} />
           </div>
         </ReactGridLayout>
       )}

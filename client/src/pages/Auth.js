@@ -82,15 +82,9 @@ const Auth = () => {
         city: 'Lille',
       },
       currency: {
-        rate: {
-          display: true,
-          currency: 'EUR',
-          to: 'USD',
-        },
-        stock: {
-          display: true,
-          stock: 'TSLA'
-        },
+        display: true,
+        currency: 'EUR',
+        to: 'USD',
       }
     });
     return;
