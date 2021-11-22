@@ -16,6 +16,7 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
+  const [loginIn, setLoginIn] = useState(false);
 
   const handleClick = () => {
     setOpen(true);
@@ -30,11 +31,11 @@ const Auth = () => {
 
   useEffect(() => {
     return auth.onAuthStateChanged(user => {
-      if (user) {
+      if (user && loginIn === false) {
         history.push('/');
       }
     });
-  }, []);
+  }, [loginIn]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -85,18 +86,24 @@ const Auth = () => {
         display: true,
         currency: 'EUR',
         to: 'USD',
+      },
+      github: {
+        display: true,
+        token: "",
+        widget: "Contributions",
       }
     });
     return;
   }
 
   const googleSignin = async () => {
+    setLoginIn(true);
     const data = await signInWithPopup(auth, new GoogleAuthProvider()).catch((err) => {
-      console.log(err);
       alert(err.message);
     });
 
-   createUser(data.user); 
+    await createUser(data.user);
+    setLoginIn(false);
   }
 
   return (

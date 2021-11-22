@@ -15,7 +15,7 @@ const Home = () => {
     return auth.onAuthStateChanged(user => {
       if (user) {
         const userRef = doc(db, `users/${user.uid}`);
-        const settingsRef = doc(db, 'settings', user.uid);
+        const settingsRef = doc(db, `settings/${user.uid}`);
         getDoc(userRef).then(userDoc => {
           setUser(userDoc.data());
         });
