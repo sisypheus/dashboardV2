@@ -7,9 +7,13 @@ const url = 'https://api.coinbase.com/v2/exchange-rates';
 
 router.get('/currencies', async (req, res) => {
   await fetch(url).then(response => response.json()).then(data => {
-    if (data.data?.rates)
-      res.json(data.data.rates);
-    else
+    if (data.data?.rates) {
+      let currencies = [];
+      for (const [key, value] of Object.entries(data.data.rates)) {
+        currencies.push(key);
+      }
+      res.send(currencies);
+    } else
       res.json({ error: 'No data' });
   }).catch(err => {
     res.json({ error: err });
