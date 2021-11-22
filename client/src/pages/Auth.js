@@ -38,6 +38,7 @@ const Auth = () => {
   }, [loginIn]);
 
   const handleSubmit = async (event) => {
+    setLoginIn(true);
     event.preventDefault();
 
     if (signIn) {
