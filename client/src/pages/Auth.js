@@ -80,15 +80,18 @@ const Auth = () => {
     const settingsRef = doc(db, `settings/${user.uid}`);
     await setDoc(settingsRef, {
       weather: {
+        refresh: 5,
         display: true,
         city: 'Lille',
       },
       currency: {
+        refresh: 5,
         display: true,
         currency: 'EUR',
         to: 'USD',
       },
       github: {
+        refresh: 5,
         display: true,
         token: "",
         widget: "Contributions",
