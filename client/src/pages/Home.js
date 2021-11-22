@@ -24,6 +24,7 @@ const Home = () => {
         })
       } else {
         setUser(null);
+        setSettings(null);
       }
     });
   }, []);
