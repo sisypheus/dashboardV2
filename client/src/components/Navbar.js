@@ -6,12 +6,13 @@ import { AiOutlineArrowLeft } from 'react-icons/ai'
 const Navbar = () => {
   const [setTheme, colorTheme] = useDarkMode();
   const history = useHistory();
+  const location = history.location.pathname;
 
   return (
     <nav className="h-24 relative bg-blue-800 dark:bg-dark-nav text-gray-200 flex items-center justify-center"> 
       <div className="mr-auto justify-self-start pl-12 flex items-center">
         { history.location.pathname === '/configure' ? (
-        <div onClick={() => history.goBack()} className="bg-gray-700 p-2 cursor-pointer rounded-full">
+        <div onClick={() => location === '/configure' ? history.push('/') : history.goBack()} className="bg-gray-700 p-2 cursor-pointer rounded-full">
           <AiOutlineArrowLeft className="text-2xl font-black"  />
         </div>
         ) : (
