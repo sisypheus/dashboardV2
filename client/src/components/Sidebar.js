@@ -19,6 +19,10 @@ const Sidebar = ({ user }) => {
           <button onClick={() => auth.signOut()} className="py-2 mt-4 px-4 bg-red-600 rounded-lg shadow-lg text-white font-bold">
             Log out
           </button>
+          <p>Currency</p>
+          <p>Github</p>
+          <p>Weather</p>
+          <p>Twitter</p>
         </div>
       ) : (
         <div className="p-2 flex flex-col items-center text-center dark:text-gray-200">

@@ -58,7 +58,7 @@ const Auth = () => {
           signUpData.user.reload().then(async () => {
             if (signUpData.user.emailVerified) {
               clearInterval(interval);
-              await createUser(signUpData.user);
+              await createUser(signUpData.user, name);
               history.push('/');
             } else {
               console.log('email not verified');
@@ -70,10 +70,10 @@ const Auth = () => {
     }
   }
 
-  const createUser = async (user) => {
+  const createUser = async (user, name) => {
     const userRef = doc(db, 'users', user.uid);
     await setDoc(userRef, {
-      name: user.displayName,
+      name: name,
       email: user.email,
       photo: user.photoURL,
     });
@@ -107,7 +107,7 @@ const Auth = () => {
       alert(err.message);
     });
 
-    await createUser(data.user);
+    await createUser(data.user, data.user.displayName);
     setLoginIn(false);
   }
 
