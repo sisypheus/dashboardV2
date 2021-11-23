@@ -12,12 +12,21 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
+    "connect-redis": "^6.0.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "google-auth-library": "^7.10.2",
+    "googleapis": "^91.0.0",
+    "got": "^11.8.3",
     "node-fetch": "^3.1.0",
     "nodemon": "^2.0.14",
+    "oauth": "^0.9.15",
     "oauth-1.0a": "^2.2.6",
-    "twitter-api-v2": "^1.6.5"
+    "redis": "^3.1.2",
+    "twitter-api-v2": "^1.6.5",
+    "utf8": "^3.0.0"
   }
 }

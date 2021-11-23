@@ -1,12 +1,12 @@
 import express from 'express';
 const app = express();
-import cors from 'cors';
 import dotenv from 'dotenv';
 
 import weatherRoutes from './routes/services/weather.js';
 import currencyRoutes from './routes/services/currency.js';
 import githubRoutes from './routes/services/github.js';
-import twitterRoutes from './routes/services/twitter.js';
+import redditRoutes from './routes/services/reddit.js';
+import youtubeRoutes from './routes/services/youtube.js';
 
 dotenv.config();
 
@@ -21,7 +21,8 @@ app.set('trust proxy', true);
 app.use('/service/weather', weatherRoutes);
 app.use('/service/currency', currencyRoutes);
 app.use('/service/github', githubRoutes);
-app.use('/service/twitter', twitterRoutes);
+app.use('/service/reddit', redditRoutes);
+app.use('/service/youtube', youtubeRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is up and running')
