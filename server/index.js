@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import weatherRoutes from './routes/services/weather.js';
 import currencyRoutes from './routes/services/currency.js';
 import githubRoutes from './routes/services/github.js';
+import twitterRoutes from './routes/services/twitter.js';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.set('trust proxy', true);
 app.use('/service/weather', weatherRoutes);
 app.use('/service/currency', currencyRoutes);
 app.use('/service/github', githubRoutes);
+app.use('/service/twitter', twitterRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is up and running')

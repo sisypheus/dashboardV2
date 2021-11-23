@@ -4,8 +4,6 @@ import axios from "axios";
 
 const router = express.Router();
 
-const url = '';
-
 router.get('/user/token', async (req, res) => {
   const code = req.query.code;
 
