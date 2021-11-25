@@ -76,7 +76,7 @@ const Configure = () => {
     await setDoc(settingsRef, {
       weather: {
         display: weatherDisplay,
-        city: weatherCity
+        city: weatherCity,
       },
       currency: {
         display: currencyDisplay,
