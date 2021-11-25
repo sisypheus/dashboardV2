@@ -5,15 +5,11 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = ({ user, setSettings, settings }) => {
   const history = useHistory();
-  let settingsCopy = settings;
-  console.log(settingsCopy);
-
+  
   function handleChangeCurrency(e) {
-    //console.log(e.target.checked);
-    settingsCopy.currency.display = !settingsCopy.currency.display;
-    console.log(settingsCopy);
-    setSettings(settingsCopy);
-  };
+    setSettings({...settings, currency: {...settings.currency, display: !settings.currency.display}});
+    //TODO - update firestore
+ };
 
   return (
     <div style={{ height: 'calc(100vh - 6rem)' }} id="sidebar" className="flex justify-center dark:bg-dark-sidebar border-r-2 dark:border-gray-800 shadow-lg w-64 p-2">
@@ -29,7 +25,7 @@ const Sidebar = ({ user, setSettings, settings }) => {
             Log out
           </button>
           <p>Currency
-            <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={handleChangeCurrency} />
+            <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={handleChangeCurrency} value={settings?.currency?.display}/>
           </p>
           <p>Github</p>
           <p>Twitter</p>
