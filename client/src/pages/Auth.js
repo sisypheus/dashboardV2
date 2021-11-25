@@ -88,7 +88,7 @@ const Auth = () => {
       currency: {
         refresh: 5,
         display: true,
-        currency: 'EUR',
+        from: 'EUR',
         to: 'USD',
       },
       github: {
