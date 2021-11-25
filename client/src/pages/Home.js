@@ -11,6 +11,8 @@ const Home = () => {
   const [user, setUser] = useState(null);
   const [settings, setSettings] = useState(null);
 
+  console.log(settings);
+
   useEffect(() => {
     return auth.onAuthStateChanged(user => {
       if (user) {
@@ -33,7 +35,7 @@ const Home = () => {
     <Background>
       <Navbar />
       <div className="flex">
-        <Sidebar user={user} />
+        <Sidebar user={user} setSettings={setSettings} settings={settings} />
 
         <Widgets settings={settings} />
       </div>
