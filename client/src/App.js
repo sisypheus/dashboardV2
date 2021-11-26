@@ -4,6 +4,7 @@ import Home from './pages/Home.js';
 import Auth from './pages/Auth.js';
 import Configure from './pages/Configure.js';
 import Github from './pages/Github';
+import Google from './pages/Google';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
         </Route>
         <Route exact path="/github">
           <Github />
+        </Route>
+        <Route exact path="/google">
+          <Google />
         </Route>
       </Switch>
     </Router>

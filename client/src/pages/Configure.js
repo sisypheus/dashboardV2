@@ -24,6 +24,7 @@ const Configure = () => {
   const [githubDisplay, setGithubDisplay] = useState(false);
   const [githubWidget, setGithubWidget] = useState('');
 
+  const [youtubeLink, setYoutubeLink] = useState('');
   //snackbar
   const [settingsChanged, setSettingsChanged] = useState(false);
   const [settingsRef, setSettingsRef] = useState(null);
@@ -37,8 +38,8 @@ const Configure = () => {
           .then(res => {
             setCurrencies(res.data);
           })
-        setSettingsRef(settingsRef);
-        getDoc(userRef).then(userDoc => {
+          setSettingsRef(settingsRef);
+          getDoc(userRef).then(userDoc => {
           setUser(userDoc.data());
         });
         getDoc(settingsRef).then(settingsDoc => {
@@ -53,6 +54,14 @@ const Configure = () => {
           setGithubToken(settingsDoc.data().github.token);
           setGithubDisplay(settingsDoc.data().github.display);
           setGithubWidget(settingsDoc.data().github.widget);
+          //youtube
+          if (!settingsDoc.data()?.youtube?.tokens) {
+            axios.get(process.env.REACT_APP_API + '/service/youtube/auth/link')
+              .then(res => {
+                setYoutubeLink(res.data);
+                console.log(res.data);
+              })
+          }
         })
       } else {
         history.push('/auth');
@@ -173,7 +182,8 @@ const Configure = () => {
             )}
           </div>
 
-          {/* Twitter */}
+          {/* Youtube */}
+          <a className="text-white" href={youtubeLink}>Authorize Youtube</a>
         </div>
       </div>
       {/* <img src="http://ghchart.rshah.org/sisypheus" alt="Github chart"/> */}

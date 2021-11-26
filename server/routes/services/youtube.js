@@ -11,7 +11,8 @@ const getAuthClient = () => {
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_SECRET,
     //change this for the front end
-    'http://localhost:8080/service/youtube/auth/callback'
+    // 'http://localhost:8080/service/youtube/auth/callback'
+    'http://localhost:3000/youtube',
   );
 }
 
@@ -45,7 +46,14 @@ router.get('/auth/callback', async (req, res) => {
   const { tokens } = await oauth2Client.getToken(req.query.code);
   console.log(tokens);
   res.send(tokens);
-});
+});      
+
+router.get('/auth/token', async (req, res) => {
+  const oauth2Client = getAuthClient();
+  const { tokens } = await oauth2Client.getToken(req.query.code);
+  console.log(tokens);
+  res.send(tokens);
+})
 
 // router.get('/token/refresh', async (req, res) => {
 //   const oauth2Client = getAuthClient();
