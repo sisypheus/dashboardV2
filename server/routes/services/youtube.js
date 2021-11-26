@@ -56,46 +56,60 @@ router.get('/auth/callback', async (req, res) => {
   res.send(tokens);
 });
 
-router.get('/token/refresh', async (req, res) => {
-  const oauth2Client = getAuthClient();
-  const {token, refresh_token,expiry_date, token_type, scope} = req.query;
-  oauth2Client.setCredentials({
-    access_token: token,
-    refresh_token: refresh_token,
-    expiry_date: expiry_date,
-    token_type: token_type,
-    scope: scope
-  });
-  oauth2Client.refreshAccessToken((err, tokens) => {
-    if (err) {
-      res.send({err});
-    }
-    console.log(tokens);
-    res.send(tokens);
-  });
-});
+// router.get('/token/refresh', async (req, res) => {
+//   const oauth2Client = getAuthClient();
+//   const {token, refresh_token,expiry_date, token_type, scope} = req.query;
+//   oauth2Client.setCredentials({
+//     access_token: token,
+//     refresh_token: refresh_token,
+//     expiry_date: expiry_date,
+//     token_type: token_type,
+//     scope: scope
+//   });
+//   oauth2Client.refreshAccessToken((err, tokens) => {
+//     if (err) {
+//       res.send({err});
+//     }
+//     console.log(tokens);
+//     res.send(tokens);
+//   });
+// });
 
-router.get('/search/channel', async (res, req) => {
-  const oauth2Client = getAuthClient();
-  console.log(req.query.access_token);
-  const {tokens} = req.query;
-  oauth2Client.setCredentials(tokens);
+const getChannelId = async (query, client) => {
   let service = google.youtube('v3');
+  const id = await service.search.list({
+    auth: client,
+    q: query,
+    part: 'snippet',
+    type: 'channel',
+    maxResults: 1
+  }).then((response) => {
+    return response.data.items[0].id.channelId;
+  }).catch((err) => {
+    return -1;
+  });
+  return id;
+}
+
+router.get('/channel/video/last', async (req, res) => {
+  const oauth2Client = getAuthClient();
+  const tokens = req.query;
+  const query = req.query.q;
+  oauth2Client.setCredentials(tokens);
+  const channelId = await getChannelId(query, oauth2Client);
+  let service = google.youtube('v3');
+
   service.search.list({
     auth: oauth2Client,
     part: 'snippet',
-    q: 'Wankil Studio',
-    type: 'channel',
-    maxResults: 1
+    channelId: channelId,
+    maxResults: 1,
+    order: 'date',
+    type: 'video'
   }, (err, response) => {
-    if (err) {
-      console.log('The API returned an error: ' + err);
-      return;
-    }
-    response.data.items.forEach((item) => {
-      console.log(item.snippet);
-    })
+    console.log(response.data.items[0]);
   });
+  // console.log(channelId);
 });
 
 export default router;
