@@ -7,6 +7,9 @@ import currencyRoutes from './routes/services/currency.js';
 import githubRoutes from './routes/services/github.js';
 import redditRoutes from './routes/services/reddit.js';
 import youtubeRoutes from './routes/services/youtube.js';
+import nasaRoutes from './routes/services/nasa.js';
+import quoteRoutes from './routes/services/quotes.js';
+import intraRoutes from './routes/services/intra.js';
 
 dotenv.config();
 
@@ -23,6 +26,9 @@ app.use('/service/currency', currencyRoutes);
 app.use('/service/github', githubRoutes);
 app.use('/service/reddit', redditRoutes);
 app.use('/service/youtube', youtubeRoutes);
+app.use('/service/nasa', nasaRoutes);
+app.use('/service/quote', quoteRoutes);
+app.use('/service/intra', intraRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is up and running')

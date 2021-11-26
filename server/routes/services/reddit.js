@@ -11,6 +11,21 @@ router.get('/auth/link', async (req, res) => {
   res.send(`https://www.reddit.com/api/v1/authorize?client_id=${process.env.REDDIT_CLIENT_ID}&response_type=code&state=random&redirect_uri=${process.env.REDDIT_REDIRECT_URI}&scope=account,identity,read&duration=permanent`)
 });
 
+router.get('/token/refresh', async (req, res) => {
+  const {refresh_token} = req.query;
+
+  const response = await fetch('https://www.reddit.com/api/v1/access_token', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Basic ${Buffer.from(`${process.env.REDDIT_CLIENT_ID}:${process.env.REDDIT_CLIENT_SECRET}`).toString('base64')}`,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `grant_type=refresh_token&refresh_token=${refresh_token}`
+  }).then(res => res.json());
+
+  res.send(response);
+})
+
 router.get('/auth/fetch_code', async (req, res) => {
   const { code } = req.query;
 
