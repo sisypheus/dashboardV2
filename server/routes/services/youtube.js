@@ -1,5 +1,5 @@
 import express from "express";
-import {google} from "googleapis";
+import { google } from "googleapis";
 
 const router = express.Router();
 
@@ -10,8 +10,25 @@ const getAuthClient = () => {
   return new OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_SECRET,
+    //change this for the front end
     'http://localhost:8080/service/youtube/auth/callback'
   );
+}
+
+const getChannelId = async (query, client) => {
+  let service = google.youtube('v3');
+  const id = await service.search.list({
+    auth: client,
+    q: query,
+    part: 'snippet',
+    type: 'channel',
+    maxResults: 1
+  }).then((response) => {
+    return response.data.items[0].id.channelId;
+  }).catch((err) => {
+    return -1;
+  });
+  return id;
 }
 
 router.get('/auth/link', async (req, res) => {
@@ -22,37 +39,11 @@ router.get('/auth/link', async (req, res) => {
   res.send(url);
 });
 
+//this must be handled by the frontend
 router.get('/auth/callback', async (req, res) => {
   const oauth2Client = getAuthClient();
-  const {tokens} = await oauth2Client.getToken(req.query.code);
+  const { tokens } = await oauth2Client.getToken(req.query.code);
   console.log(tokens);
-  oauth2Client.setCredentials(tokens);
-  let service = google.youtube('v3');
-  service.search.list({
-    auth: oauth2Client,
-    part: 'snippet',
-    q: 'Wankil Studio',
-    type: 'channel',
-    maxResults: 1
-  }, (err, response) => {
-    if (err) {
-      console.log('The API returned an error: ' + err);
-      return;
-    }
-    response.data.items.forEach((item) => {
-      console.log(item.snippet);
-    })
-    // console.log(response.data);
-    // const channels = response.data.items;
-    // if (channels.length == 0) {
-    //   console.log('No channel found.');
-    // } else {
-    //   console.log('This channel\'s ID is %s. Its title is %s, and it has %s views.',
-    //     channels[0].id,
-    //     channels[0].snippet.title,
-    //     channels[0].statistics.viewCount);
-    // }
-  });
   res.send(tokens);
 });
 
@@ -75,28 +66,13 @@ router.get('/auth/callback', async (req, res) => {
 //   });
 // });
 
-const getChannelId = async (query, client) => {
-  let service = google.youtube('v3');
-  const id = await service.search.list({
-    auth: client,
-    q: query,
-    part: 'snippet',
-    type: 'channel',
-    maxResults: 1
-  }).then((response) => {
-    return response.data.items[0].id.channelId;
-  }).catch((err) => {
-    return -1;
-  });
-  return id;
-}
 
 router.get('/channel/video/last', async (req, res) => {
   const oauth2Client = getAuthClient();
   const tokens = req.query;
-  const query = req.query.q;
+  const channel = req.query.channel;
   oauth2Client.setCredentials(tokens);
-  const channelId = await getChannelId(query, oauth2Client);
+  const channelId = await getChannelId(channel, oauth2Client);
   let service = google.youtube('v3');
 
   service.search.list({
@@ -107,9 +83,36 @@ router.get('/channel/video/last', async (req, res) => {
     order: 'date',
     type: 'video'
   }, (err, response) => {
-    console.log(response.data.items[0]);
+    if (err) {
+      res.send({err});
+    } else {
+      res.send(response.data.items[0]);
+    }
   });
-  // console.log(channelId);
 });
+
+router.get('/channel/stats', async (req, res) => {
+  const oauth2Client = getAuthClient();
+  const tokens = req.query;
+  const channel = req.query.channel;
+  oauth2Client.setCredentials(tokens);
+  const channelId = await getChannelId(channel, oauth2Client);
+  let service = google.youtube('v3');
+
+  service.channels.list({
+    auth: oauth2Client,
+    part: 'snippet,statistics',
+    id: channelId,
+  }, (err, response) => {
+    if (err) {
+      res.send({err});
+    } else {
+      if (response.data.items.length > 0)
+        res.send({logo: response.data.items[0].snippet.thumbnails.default.url, title: response.data.items[0].snippet.title, views: response.data.items[0].statistics.viewCount, subscribers: response.data.items[0].statistics.subscriberCount, videos: response.data.items[0].statistics.videoCount});
+      else
+        res.send({err: 'No channel found'});
+    }
+  })
+})
 
 export default router;
