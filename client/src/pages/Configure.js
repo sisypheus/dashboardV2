@@ -29,6 +29,7 @@ const Configure = () => {
   const [nasaWidget, setNasaWidget] = useState('');
 
   //quotes
+  const [quoteCategories, setQuoteCategories] = useState([]);
   //random
   const [randomDisplay, setRandomDisplay] = useState(false);
   const [randomCategory, setRandomCategory] = useState('');
@@ -55,8 +56,12 @@ const Configure = () => {
           .then(res => {
             setCurrencies(res.data);
           })
-          setSettingsRef(settingsRef);
-          getDoc(userRef).then(userDoc => {
+        axios.get(process.env.REACT_APP_API + '/service/quote/categories')
+          .then(res => {
+            setQuoteCategories(res.data);
+          })
+        setSettingsRef(settingsRef);
+        getDoc(userRef).then(userDoc => {
           setUser(userDoc.data());
         });
         getDoc(settingsRef).then(settingsDoc => {
@@ -80,13 +85,11 @@ const Configure = () => {
 
           //quotes
           //random widget
-          setRandomDisplay(settingsDoc.data().random.display);
-          setRandomCategory(settingsDoc.data().random.category);
+          setRandomDisplay(settingsDoc.data().quote.random.display);
+          setRandomCategory(settingsDoc.data().quote.random.category);
           //qod widget
-          setQodDisplay(settingsDoc.data().qod.display);
-          setQodCategory(settingsDoc.data().qod.category);
-
-        
+          setQodDisplay(settingsDoc.data().quote.qod.display);
+          setQodCategory(settingsDoc.data().quote.qod.category);
 
           //youtube
           if (!settingsDoc.data()?.youtube?.tokens) {
@@ -175,7 +178,7 @@ const Configure = () => {
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">From</div>
-               <input type="text" list="currencies_from" className="pl-1 w-full rounded-md bg-gray-600" onChange={(e) => handleChange(e, setCurrencyFrom)} value={currencyFrom} />
+               <input type="text" list="currencies_from" className="pl-1 w-full text-white rounded-md bg-gray-600" onChange={(e) => handleChange(e, setCurrencyFrom)} value={currencyFrom} />
                 <datalist id="currencies_from">
                   {currencies !== [] ? currencies.map(currency => (
                     <option key={currency} value={currency} />
@@ -184,7 +187,7 @@ const Configure = () => {
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">To</div>
-              <input type="text" list="currencies_to" className="pl-1 w-full rounded-md bg-gray-600" onChange={(e) => handleChange(e, setCurrencyTo)} value={currencyTo} />
+              <input type="text" list="currencies_to" className="pl-1 w-full text-white rounded-md bg-gray-600" onChange={(e) => handleChange(e, setCurrencyTo)} value={currencyTo} />
                 <datalist id="currencies_to">
                   {currencies !== [] ? currencies.map(currency => (
                     <option key={currency} value={currency} />
@@ -242,16 +245,39 @@ const Configure = () => {
           </div>
 
           {/* Quotes */}
-          <div className="pl-2 text-lg mt-6 font-bold">Weather Service</div>
+          <div className="pl-2 text-lg mt-6 font-bold">Quote Service</div>
           <div className="border-b-2 w-full border-gray-700 mt-1 mb-3"></div>
           <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
+            <div className="text-xl font-bold">Random quote widget</div>
             <div className="flex items-center justify-between">
               <div>Display widget</div>
-              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setWeatherDisplay)} checked={weatherDisplay} />
+              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setRandomDisplay)} checked={randomDisplay} />
             </div>
             <div className="flex space-x-4">
-              <div className="pl-4">City</div>
-              <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setWeatherCity)} value={weatherCity} />
+              <div className="pl-4">Category</div>
+              <select className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setRandomCategory)} value={randomCategory} >
+                {quoteCategories !== [] ? quoteCategories.map(category => (
+                  <option key={category} value={category} >{category}</option>
+                )) : null}
+              </select>
+            </div>
+
+            {/* separator between widgets */}
+            <div className="border-b-2 w-full border-gray-700 py-3"></div>
+            {/* separator between widgets */}
+
+            <div className="text-xl font-bold pt-4">Quote of the day widget</div>
+            <div className="flex items-center justify-between">
+              <div>Display widget</div>
+              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setQodDisplay)} checked={qodDisplay} />
+            </div>
+            <div className="flex space-x-4">
+              <div className="pl-4">Category</div>
+              <select className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setQodCategory)} value={qodCategory} >
+                {quoteCategories !== [] ? quoteCategories.map(category => (
+                  <option key={category} value={category} >{category}</option>
+                )) : null}
+              </select>
             </div>
           </div>
 
