@@ -24,7 +24,24 @@ const Configure = () => {
   const [githubDisplay, setGithubDisplay] = useState(false);
   const [githubWidget, setGithubWidget] = useState('');
 
+  //nasa
+  const [nasaDisplay, setNasaDisplay] = useState(false);
+  const [nasaWidget, setNasaWidget] = useState('');
+
+  //quotes
+  //random
+  const [randomDisplay, setRandomDisplay] = useState(false);
+  const [randomCategory, setRandomCategory] = useState('');
+  //qod
+  const [qodDisplay, setQodDisplay] = useState(false);
+  const [qodCategory, setQodCategory] = useState('');
+
+  //youtube
   const [youtubeLink, setYoutubeLink] = useState('');
+
+  //reddit
+  const [redditLink, setRedditLink] = useState('');
+
   //snackbar
   const [settingsChanged, setSettingsChanged] = useState(false);
   const [settingsRef, setSettingsRef] = useState(null);
@@ -46,19 +63,44 @@ const Configure = () => {
           //weather
           setWeatherDisplay(settingsDoc.data().weather.display);
           setWeatherCity(settingsDoc.data().weather.city);
+
           //currency
           setCurrencyDisplay(settingsDoc.data().currency.display);
           setCurrencyFrom(settingsDoc.data().currency.from);
           setCurrencyTo(settingsDoc.data().currency.to);
+
           //github
           setGithubToken(settingsDoc.data().github.token);
           setGithubDisplay(settingsDoc.data().github.display);
           setGithubWidget(settingsDoc.data().github.widget);
+
+          //nasa
+          setNasaDisplay(settingsDoc.data().nasa.display);
+          setNasaWidget(settingsDoc.data().nasa.widget);
+
+          //quotes
+          //random widget
+          setRandomDisplay(settingsDoc.data().random.display);
+          setRandomCategory(settingsDoc.data().random.category);
+          //qod widget
+          setQodDisplay(settingsDoc.data().qod.display);
+          setQodCategory(settingsDoc.data().qod.category);
+
+        
+
           //youtube
           if (!settingsDoc.data()?.youtube?.tokens) {
             axios.get(process.env.REACT_APP_API + '/service/youtube/auth/link')
               .then(res => {
                 setYoutubeLink(res.data);
+                console.log(res.data);
+              })
+          }
+          //reddit
+          if (!settingsDoc.data()?.reddit?.tokens) {
+            axios.get(process.env.REACT_APP_API + '/service/reddit/auth/link')
+              .then(res => {
+                setRedditLink(res.data);
                 console.log(res.data);
               })
           }
@@ -181,9 +223,42 @@ const Configure = () => {
               </a>
             )}
           </div>
+              
+          {/* Nasa */}
+          <div className="pl-2 text-lg mt-6 font-bold">Nasa Service</div>
+          <div className="border-b-2 w-full border-gray-700 mt-1 mb-3"></div>
+          <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
+            <div className="flex items-center justify-between">
+              <div>Display widget</div>
+              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setNasaDisplay)} checked={nasaDisplay} />
+            </div>
+            <div className="flex space-x-4">
+              <div className="pl-4">Type</div>
+              <select className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setNasaWidget)} value={nasaWidget} >
+                <option value="apod">Astro Picture Of the Day</option>
+                <option value="mars">Mars rover photo</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Quotes */}
+          <div className="pl-2 text-lg mt-6 font-bold">Weather Service</div>
+          <div className="border-b-2 w-full border-gray-700 mt-1 mb-3"></div>
+          <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
+            <div className="flex items-center justify-between">
+              <div>Display widget</div>
+              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setWeatherDisplay)} checked={weatherDisplay} />
+            </div>
+            <div className="flex space-x-4">
+              <div className="pl-4">City</div>
+              <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setWeatherCity)} value={weatherCity} />
+            </div>
+          </div>
 
           {/* Youtube */}
           <a className="text-white" href={youtubeLink}>Authorize Youtube</a>
+          {/* Reddit */}
+          <a className="text-white" href={redditLink}>Authorize Reddit</a>
         </div>
       </div>
       {/* <img src="http://ghchart.rshah.org/sisypheus" alt="Github chart"/> */}

@@ -4,7 +4,8 @@ import Home from './pages/Home.js';
 import Auth from './pages/Auth.js';
 import Configure from './pages/Configure.js';
 import Github from './pages/Github';
-import Google from './pages/Google';
+import Youtube from './pages/Youtube';
+import Reddit from './pages/Reddit';
 
 function App() {
   return (
@@ -22,8 +23,11 @@ function App() {
         <Route exact path="/github">
           <Github />
         </Route>
-        <Route exact path="/google">
-          <Google />
+        <Route exact path="/youtube">
+          <Youtube />
+        </Route>
+        <Route exact path="/reddit">
+          <Reddit />
         </Route>
       </Switch>
     </Router>

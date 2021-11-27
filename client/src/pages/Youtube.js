@@ -7,26 +7,33 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 
-const Google = () => {
+const Youtube = () => {
   const [user, setUser] = useState('');
   const history = useHistory();
 
   useEffect(() => {
     return auth.onAuthStateChanged(async (user) => {
       if (user) {
+        console.log('connected');
         const userRef = doc(db, `settings/${user.uid}`);
         const url = window.location.href;
         const code = url.split('?code=')[1];
+        console.log(code);
         const res = await axios.get(process.env.REACT_APP_API + '/service/youtube/auth/token' + '?code=' + code);
-        console.log(res.data);
-        // if (res.data.tokens) {
-        //   setUser(res.data.tokens);
-        //   await setDoc(userRef, {
-        //     youtube: {
-        //       tokens: res.data.tokens
-        //     }
-        //   }, { merge: true });
-        // }
+        // console.log(res.data);
+        if (!res.data.err) {
+          setUser(res.data);
+          await setDoc(userRef, {
+            youtube: {
+              tokens: res.data
+            }
+          }, { merge: true });
+          setTimeout(() => {
+            history.push('/configure');
+          }, 2000);
+        }
+      } else {
+        setUser(null);
       }
     })
   }, [])
@@ -50,9 +57,9 @@ const Google = () => {
             <>
               <div className="flex items-center justify-center space-x-3">
                 <p>Fetching your token...</p>
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               </div>
             </>
@@ -63,4 +70,4 @@ const Google = () => {
   )
 }
 
-export default Google
+export default Youtube

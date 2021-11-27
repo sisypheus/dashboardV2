@@ -40,19 +40,14 @@ router.get('/auth/link', async (req, res) => {
   res.send(url);
 });
 
-//this must be handled by the frontend
-router.get('/auth/callback', async (req, res) => {
-  const oauth2Client = getAuthClient();
-  const { tokens } = await oauth2Client.getToken(req.query.code);
-  console.log(tokens);
-  res.send(tokens);
-});      
-
 router.get('/auth/token', async (req, res) => {
   const oauth2Client = getAuthClient();
-  const { tokens } = await oauth2Client.getToken(req.query.code);
-  console.log(tokens);
-  res.send(tokens);
+  try {
+    const { tokens } = await oauth2Client.getToken(req.query.code);
+    res.send(tokens);
+  } catch (err) {
+    res.send({err: err});
+  }
 })
 
 // router.get('/token/refresh', async (req, res) => {
@@ -81,8 +76,11 @@ router.get('/channel/video/last', async (req, res) => {
   const channel = req.query.channel;
   oauth2Client.setCredentials(tokens);
   const channelId = await getChannelId(channel, oauth2Client);
-  let service = google.youtube('v3');
 
+  if (channelId === -1)
+    res.send({err: 'Channel not found'});
+
+  let service = google.youtube('v3');
   service.search.list({
     auth: oauth2Client,
     part: 'snippet',
@@ -105,8 +103,11 @@ router.get('/channel/stats', async (req, res) => {
   const channel = req.query.channel;
   oauth2Client.setCredentials(tokens);
   const channelId = await getChannelId(channel, oauth2Client);
-  let service = google.youtube('v3');
 
+  if (channelId === -1)
+    res.send({err: 'Channel not found'});
+
+  let service = google.youtube('v3');
   service.channels.list({
     auth: oauth2Client,
     part: 'snippet,statistics',

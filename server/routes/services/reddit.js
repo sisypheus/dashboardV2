@@ -28,7 +28,7 @@ router.get('/token/refresh', async (req, res) => {
 
 router.get('/auth/fetch_code', async (req, res) => {
   const { code } = req.query;
-
+  console.log(code);
   const form = new URLSearchParams({
     grant_type: "authorization_code",
     code: code,
