@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const Github = ({display, token}) => {
+        /* <img src="http://ghchart.rshah.org/sisypheus" alt="Github chart"/> */
   return (
     <>
     {display && 

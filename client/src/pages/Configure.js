@@ -14,11 +14,13 @@ const Configure = () => {
   //weather
   const [weatherDisplay, setWeatherDisplay] = useState(false);
   const [weatherCity, setWeatherCity] = useState('');
+
   //currency
   const [currencyDisplay, setCurrencyDisplay] = useState(false);
   const [currencyFrom, setCurrencyFrom] = useState('');
   const [currencyTo, setCurrencyTo] = useState('');
   const [currencies, setCurrencies] = useState([]);
+
   //github
   const [githubToken, setGithubToken] = useState(null);
   const [githubDisplay, setGithubDisplay] = useState(false);
@@ -42,15 +44,22 @@ const Configure = () => {
   const [intranetToken, setIntranetToken] = useState('');
   const [intranetWidget, setIntranetWidget] = useState('');
 
-  //youtube
-  const [youtubeLink, setYoutubeLink] = useState('');
-
   //reddit
   const [redditDisplay, setRedditDisplay] = useState(false);
   const [redditToken, setRedditToken] = useState('');
   const [redditLink, setRedditLink] = useState('');
   const [redditSubreddit, setRedditSubreddit] = useState('');
   const [redditPosts, setRedditPosts] = useState(0);
+
+  //youtube
+  const [youtubeLink, setYoutubeLink] = useState('');
+  const [youtubeToken, setYoutubeToken] = useState('');
+  //last video from channel
+  const [youtubeDisplayLast, setYoutubeDisplayLast] = useState(false);
+  const [youtubeChannelLast, setYoutubeChannelLast] = useState('');
+  //statistics of channel
+  const [youtubeDisplayStats, setYoutubeDisplayStats] = useState(false);
+  const [youtubeChannelStats, setYoutubeChannelStats] = useState('');
 
   //snackbar
   const [settingsChanged, setSettingsChanged] = useState(false);
@@ -112,7 +121,17 @@ const Configure = () => {
           setRedditPosts(settingsDoc.data().reddit.posts);
 
           //youtube
+          setYoutubeToken(settingsDoc.data().youtube.tokens);
+          //statistics of channel
+          setYoutubeDisplayStats(settingsDoc.data().youtube.stats.display);
+          setYoutubeChannelStats(settingsDoc.data().youtube.stats.channel);
+          //last video from channel
+          setYoutubeDisplayLast(settingsDoc.data().youtube.last.display);
+          setYoutubeChannelLast(settingsDoc.data().youtube.last.channel);
+
+          //youtube
           if (!settingsDoc.data()?.youtube?.tokens) {
+            console.log(settingsDoc.data().youtube.tokens);
             axios.get(process.env.REACT_APP_API + '/service/youtube/auth/link')
               .then(res => {
                 setYoutubeLink(res.data);
@@ -343,14 +362,16 @@ const Configure = () => {
                     <div className="pl-4">Subreddit</div>
                     <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setRedditSubreddit)} value={redditSubreddit} />
                   </div>
-                  <div className="flex space-x-4">
-                    <div className="pl-4">Number of posts</div>
-                    <input type="text" list="subreddit_posts" className="pl-1 w-full text-white rounded-md bg-gray-600" onChange={(e) => handleChange(e, setRedditPosts)} value={redditPosts} />
-                    <datalist id="subreddit_posts">
-                      {Array.from({ length: 15 }, (_, i) => i + 1).map(number => (
-                        <option key={number} value={number} />
-                      ))}
-                    </datalist>
+                  <div className="flex justify-between">
+                    <div className="pl-4">Posts</div>
+                    <div>
+                      <input type="text" list="subreddit_posts" className="pl-1 -full text-white rounded-md bg-gray-600" onChange={(e) => handleChange(e, setRedditPosts)} value={redditPosts} />
+                      <datalist id="subreddit_posts">
+                        {Array.from({ length: 15 }, (_, i) => i + 1).map(number => (
+                          <option key={number} value={number} />
+                        ))}
+                      </datalist>
+                    </div>
                   </div>
                 </div>
               </>
@@ -366,9 +387,47 @@ const Configure = () => {
             )}
           </div>
 
-          <a className="text-white" href={redditLink}>Authorize Reddit</a>
           {/* Youtube */}
-          <a className="text-white" href={youtubeLink}>Authorize Youtube</a>
+          <div className="pl-2 text-lg mt-6 font-bold">Youtube Service</div>
+          <div className="border-b-2 w-full border-gray-700 mt-1 mb-3"></div>
+          <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
+            {youtubeToken ? (
+              <>
+                <div className="text-xl font-bold">Last video widget</div>
+            <div className="flex items-center justify-between">
+              <div>Display widget</div>
+              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayLast)} checked={youtubeDisplayLast} />
+            </div>
+            <div className="flex space-x-4">
+              <div className="pl-4">Channel</div>
+              <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setYoutubeChannelLast)} value={youtubeChannelLast} />
+            </div>
+
+            {/* separator between widgets */}
+            <div className="border-b-2 w-full border-gray-700 py-3"></div>
+            {/* separator between widgets */}
+
+            <div className="text-xl font-bold pt-4">Statistics widget</div>
+            <div className="flex items-center justify-between">
+              <div>Display widget</div>
+              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayStats)} checked={youtubeDisplayStats} />
+            </div>
+            <div className="flex space-x-4">
+              <div className="pl-4">Channel</div>
+              <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setYoutubeChannelStats)} value={youtubeChannelStats} />
+            </div>
+              </>
+            ) : (
+              <a className="flex justify-center" href={youtubeLink}>
+                <div className="flex items-center justify-between mb-2">
+                  <button type="button" className="items-center justify-center p-2 px-4 font-semibold text-gray-900 bg-white border-2 border-gray-500 rounded-md shadow outline-none hover:bg-yellow-50 hover:border-yellow-400 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="inline w-8 h-8 mr-3 mb-1 text-gray-900 fill-current" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" /></svg>
+                    Sign in with Youtube
+                  </button>
+                </div>
+              </a>
+            )}
+          </div>
         </div>
       </div>
 
@@ -376,7 +435,6 @@ const Configure = () => {
       <br />
       <br />
 
-      {/* <img src="http://ghchart.rshah.org/sisypheus" alt="Github chart"/> */}
       <Snackbar
         className="flex"
         open={settingsChanged}
