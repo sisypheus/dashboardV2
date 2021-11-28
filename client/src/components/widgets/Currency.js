@@ -6,10 +6,15 @@ const Currency = ({ from, to, display }) => {
   const [rate, setRate] = useState(null);
 
   useEffect(() => {
+    let isCancelled = false;
     axios.get(process.env.REACT_APP_API + '/service/currency/rates?pair1=' + from + '&pair2=' + to)
       .then(res => {
-        setRate(res.data.rate);
+        if (!isCancelled)
+          setRate(res.data.rate);
       })
+    return () => {
+      isCancelled = true;
+    }
   }, [])
 
   return (

@@ -7,10 +7,15 @@ const Weather = ({display, city}) => {
     city = 'Lille'
   }
   useEffect(() => {
+    let isCancelled = false;
     axios.get(process.env.REACT_APP_API + '/service/weather/' + city)
       .then(res => {
-        setWeather(res.data);
+        if (!isCancelled)
+          setWeather(res.data);
       })
+    return () => {
+      isCancelled = true;
+    }
   }, []);
 
   return (

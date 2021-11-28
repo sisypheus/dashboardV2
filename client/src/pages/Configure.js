@@ -37,11 +37,20 @@ const Configure = () => {
   const [qodDisplay, setQodDisplay] = useState(false);
   const [qodCategory, setQodCategory] = useState('');
 
+  //intranet
+  const [intranetDisplay, setIntranetDisplay] = useState(false);
+  const [intranetToken, setIntranetToken] = useState('');
+  const [intranetWidget, setIntranetWidget] = useState('');
+
   //youtube
   const [youtubeLink, setYoutubeLink] = useState('');
 
   //reddit
+  const [redditDisplay, setRedditDisplay] = useState(false);
+  const [redditToken, setRedditToken] = useState('');
   const [redditLink, setRedditLink] = useState('');
+  const [redditSubreddit, setRedditSubreddit] = useState('');
+  const [redditPosts, setRedditPosts] = useState(0);
 
   //snackbar
   const [settingsChanged, setSettingsChanged] = useState(false);
@@ -91,6 +100,17 @@ const Configure = () => {
           setQodDisplay(settingsDoc.data().quote.qod.display);
           setQodCategory(settingsDoc.data().quote.qod.category);
 
+          //intranet
+          setIntranetDisplay(settingsDoc.data().intranet.display);
+          setIntranetToken(settingsDoc.data().intranet.token);
+          setIntranetWidget(settingsDoc.data().intranet.widget);
+
+          //reddit
+          setRedditDisplay(settingsDoc.data().reddit.display);
+          setRedditToken(settingsDoc.data().reddit.token);
+          setRedditSubreddit(settingsDoc.data().reddit.subreddit);
+          setRedditPosts(settingsDoc.data().reddit.posts);
+
           //youtube
           if (!settingsDoc.data()?.youtube?.tokens) {
             axios.get(process.env.REACT_APP_API + '/service/youtube/auth/link')
@@ -100,7 +120,7 @@ const Configure = () => {
               })
           }
           //reddit
-          if (!settingsDoc.data()?.reddit?.tokens) {
+          if (!redditToken) {
             axios.get(process.env.REACT_APP_API + '/service/reddit/auth/link')
               .then(res => {
                 setRedditLink(res.data);
@@ -178,21 +198,21 @@ const Configure = () => {
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">From</div>
-               <input type="text" list="currencies_from" className="pl-1 w-full text-white rounded-md bg-gray-600" onChange={(e) => handleChange(e, setCurrencyFrom)} value={currencyFrom} />
-                <datalist id="currencies_from">
-                  {currencies !== [] ? currencies.map(currency => (
-                    <option key={currency} value={currency} />
-                  )) : null}
-                </datalist>           
+              <input type="text" list="currencies_from" className="pl-1 w-full text-white rounded-md bg-gray-600" onChange={(e) => handleChange(e, setCurrencyFrom)} value={currencyFrom} />
+              <datalist id="currencies_from">
+                {currencies !== [] ? currencies.map(currency => (
+                  <option key={currency} value={currency} />
+                )) : null}
+              </datalist>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">To</div>
               <input type="text" list="currencies_to" className="pl-1 w-full text-white rounded-md bg-gray-600" onChange={(e) => handleChange(e, setCurrencyTo)} value={currencyTo} />
-                <datalist id="currencies_to">
-                  {currencies !== [] ? currencies.map(currency => (
-                    <option key={currency} value={currency} />
-                  )) : null}
-                </datalist>
+              <datalist id="currencies_to">
+                {currencies !== [] ? currencies.map(currency => (
+                  <option key={currency} value={currency} />
+                )) : null}
+              </datalist>
             </div>
           </div>
 
@@ -226,7 +246,7 @@ const Configure = () => {
               </a>
             )}
           </div>
-              
+
           {/* Nasa */}
           <div className="pl-2 text-lg mt-6 font-bold">Nasa Service</div>
           <div className="border-b-2 w-full border-gray-700 mt-1 mb-3"></div>
@@ -281,12 +301,81 @@ const Configure = () => {
             </div>
           </div>
 
+          {/* Intranet */}
+          <div className="pl-2 text-lg mt-6 font-bold">Epitech Intranet Service</div>
+          <div className="border-b-2 w-full border-gray-700 mt-1 mb-3"></div>
+          <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
+            {intranetToken ? (
+              <>
+                <div className="flex items-center justify-between">
+                  <div>Display widget</div>
+                  <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setWeatherDisplay)} checked={weatherDisplay} />
+                </div>
+                <div className="flex space-x-4">
+                  <div className="pl-4">Widget</div>
+                  <select className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setIntranetWidget)} value={intranetWidget} >
+                    <option value="stats">Stats</option>
+                    <option value="notifications">Notifications</option>
+                  </select>
+                  {/* <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setWeatherCity)} value={weatherCity} /> */}
+                </div>
+              </>
+            ) : (
+              <div className="flex">
+                <p>Enter your autologin link</p>
+                <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" placeholder="Paste your token here" onChange={(e) => handleChange(e, setIntranetToken)} value={intranetToken} />
+              </div>
+            )}
+          </div>
+
+          {/* Reddit */}
+          <div className="pl-2 text-lg mt-6 font-bold">Reddit Service</div>
+          <div className="border-b-2 w-full border-gray-700 mt-1 mb-3"></div>
+          <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
+            {!redditToken ? (
+              <>
+                <div className="flex items-center justify-between">
+                  <div>Display widget</div>
+                  <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setRedditDisplay)} checked={redditDisplay} />
+                </div>
+                <div className="flex-col space-y-2">
+                  <div className="flex space-x-4">
+                    <div className="pl-4">Subreddit</div>
+                    <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setRedditSubreddit)} value={redditSubreddit} />
+                  </div>
+                  <div className="flex space-x-4">
+                    <div className="pl-4">Number of posts</div>
+                    <input type="text" list="subreddit_posts" className="pl-1 w-full text-white rounded-md bg-gray-600" onChange={(e) => handleChange(e, setRedditPosts)} value={redditPosts} />
+                    <datalist id="subreddit_posts">
+                      {Array.from({ length: 15 }, (_, i) => i + 1).map(number => (
+                        <option key={number} value={number} />
+                      ))}
+                    </datalist>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <a className="flex justify-center" href={redditLink}>
+                <div className="flex items-center justify-between mb-2">
+                  <button type="button" className="items-center justify-center p-2 px-4 font-semibold text-gray-900 bg-white border-2 border-gray-500 rounded-md shadow outline-none hover:bg-yellow-50 hover:border-yellow-400 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="inline w-8 h-8 mr-3 mb-1 text-gray-900 fill-current" viewBox="0 0 24 24"><path d="M14.238 15.348c.085.084.085.221 0 .306-.465.462-1.194.687-2.231.687l-.008-.002-.008.002c-1.036 0-1.766-.225-2.231-.688-.085-.084-.085-.221 0-.305.084-.084.222-.084.307 0 .379.377 1.008.561 1.924.561l.008.002.008-.002c.915 0 1.544-.184 1.924-.561.085-.084.223-.084.307 0zm-3.44-2.418c0-.507-.414-.919-.922-.919-.509 0-.923.412-.923.919 0 .506.414.918.923.918.508.001.922-.411.922-.918zm13.202-.93c0 6.627-5.373 12-12 12s-12-5.373-12-12 5.373-12 12-12 12 5.373 12 12zm-5-.129c0-.851-.695-1.543-1.55-1.543-.417 0-.795.167-1.074.435-1.056-.695-2.485-1.137-4.066-1.194l.865-2.724 2.343.549-.003.034c0 .696.569 1.262 1.268 1.262.699 0 1.267-.566 1.267-1.262s-.568-1.262-1.267-1.262c-.537 0-.994.335-1.179.804l-2.525-.592c-.11-.027-.223.037-.257.145l-.965 3.038c-1.656.02-3.155.466-4.258 1.181-.277-.255-.644-.415-1.05-.415-.854.001-1.549.693-1.549 1.544 0 .566.311 1.056.768 1.325-.03.164-.05.331-.05.5 0 2.281 2.805 4.137 6.253 4.137s6.253-1.856 6.253-4.137c0-.16-.017-.317-.044-.472.486-.261.82-.766.82-1.353zm-4.872.141c-.509 0-.922.412-.922.919 0 .506.414.918.922.918s.922-.412.922-.918c0-.507-.413-.919-.922-.919z" /></svg>
+                    Sign in with Reddit
+                  </button>
+                </div>
+              </a>
+            )}
+          </div>
+
+          <a className="text-white" href={redditLink}>Authorize Reddit</a>
           {/* Youtube */}
           <a className="text-white" href={youtubeLink}>Authorize Youtube</a>
-          {/* Reddit */}
-          <a className="text-white" href={redditLink}>Authorize Reddit</a>
         </div>
       </div>
+
+      <br />
+      <br />
+      <br />
+
       {/* <img src="http://ghchart.rshah.org/sisypheus" alt="Github chart"/> */}
       <Snackbar
         className="flex"
