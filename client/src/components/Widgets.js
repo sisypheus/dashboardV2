@@ -39,7 +39,7 @@ const Widgets = ({ settings }) => {
             <Weather city={'Lille'} display={true}/>
           </div>
           <div key="currency">
-            <Currency from={"EUR"} to={"MAD"} display={true} />
+            <Currency from={"USD"} to={"EUR"} display={true} />
           </div>
         </ReactGridLayout>
       ) : (

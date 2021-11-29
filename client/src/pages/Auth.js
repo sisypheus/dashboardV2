@@ -96,6 +96,48 @@ const Auth = () => {
         display: true,
         token: "",
         widget: "Contributions",
+      },
+      intranet: {
+        refresh: 5,
+        display: true,
+        token: "",
+        widget: "Stats",
+      },
+      nasa: {
+        refresh: 5,
+        display: true,
+        widget: "apod",
+      },
+      quote: {
+        qod: {
+          refresh: 5,
+          category: "inspirationnal",
+          display: true,
+        },
+        random: {
+          refresh: 5,
+          category: "inspirationnal",
+          display: true,
+        },
+      },
+      reddit: {
+        refresh: 5,
+        display: true,
+        tokens: {},
+        subreddit: "memes",
+        posts: 10,
+      },
+      youtube: {
+        last: {
+          refresh: 5,
+          display: true,
+          channel: 'Wankil Studio',
+        },
+        stats: {
+          refresh: 5,
+          display: true,
+          channel: 'Wankil Studio',
+        }
       }
     });
     return;

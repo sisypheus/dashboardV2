@@ -41,6 +41,7 @@ const Configure = () => {
 
   //intranet
   const [intranetDisplay, setIntranetDisplay] = useState(false);
+  const [intranetTokenPresent, setIntranetTokenPresent] = useState(false);
   const [intranetToken, setIntranetToken] = useState('');
   const [intranetWidget, setIntranetWidget] = useState('');
 
@@ -83,70 +84,8 @@ const Configure = () => {
           setUser(userDoc.data());
         });
         getDoc(settingsRef).then(settingsDoc => {
-          //weather
-          setWeatherDisplay(settingsDoc.data().weather.display);
-          setWeatherCity(settingsDoc.data().weather.city);
-
-          //currency
-          setCurrencyDisplay(settingsDoc.data().currency.display);
-          setCurrencyFrom(settingsDoc.data().currency.from);
-          setCurrencyTo(settingsDoc.data().currency.to);
-
-          //github
-          setGithubToken(settingsDoc.data().github.token);
-          setGithubDisplay(settingsDoc.data().github.display);
-          setGithubWidget(settingsDoc.data().github.widget);
-
-          //nasa
-          setNasaDisplay(settingsDoc.data().nasa.display);
-          setNasaWidget(settingsDoc.data().nasa.widget);
-
-          //quotes
-          //random widget
-          setRandomDisplay(settingsDoc.data().quote.random.display);
-          setRandomCategory(settingsDoc.data().quote.random.category);
-          //qod widget
-          setQodDisplay(settingsDoc.data().quote.qod.display);
-          setQodCategory(settingsDoc.data().quote.qod.category);
-
-          //intranet
-          setIntranetDisplay(settingsDoc.data().intranet.display);
-          setIntranetToken(settingsDoc.data().intranet.token);
-          setIntranetWidget(settingsDoc.data().intranet.widget);
-
-          //reddit
-          setRedditDisplay(settingsDoc.data().reddit.display);
-          setRedditToken(settingsDoc.data().reddit.token);
-          setRedditSubreddit(settingsDoc.data().reddit.subreddit);
-          setRedditPosts(settingsDoc.data().reddit.posts);
-
-          //youtube
-          setYoutubeToken(settingsDoc.data().youtube.tokens);
-          //statistics of channel
-          setYoutubeDisplayStats(settingsDoc.data().youtube.stats.display);
-          setYoutubeChannelStats(settingsDoc.data().youtube.stats.channel);
-          //last video from channel
-          setYoutubeDisplayLast(settingsDoc.data().youtube.last.display);
-          setYoutubeChannelLast(settingsDoc.data().youtube.last.channel);
-
-          //youtube
-          if (!settingsDoc.data()?.youtube?.tokens) {
-            console.log(settingsDoc.data().youtube.tokens);
-            axios.get(process.env.REACT_APP_API + '/service/youtube/auth/link')
-              .then(res => {
-                setYoutubeLink(res.data);
-                console.log(res.data);
-              })
-          }
-          //reddit
-          if (!redditToken) {
-            axios.get(process.env.REACT_APP_API + '/service/reddit/auth/link')
-              .then(res => {
-                setRedditLink(res.data);
-                console.log(res.data);
-              })
-          }
-        })
+          setSettings(settingsDoc);
+        });
       } else {
         history.push('/auth');
       }
@@ -179,10 +118,115 @@ const Configure = () => {
       github: {
         display: githubDisplay,
         widget: githubWidget
+      },
+      intranet: {
+        display: intranetDisplay,
+        token: intranetToken,
+        widget: intranetWidget,
+      },
+      nasa: {
+        display: nasaDisplay,
+        widget: nasaWidget,
+      },
+      quote: {
+        random: {
+          display: randomDisplay,
+          category: randomCategory,
+        },
+        qod: {
+          display: qodDisplay,
+          category: qodCategory,
+        },
+      },
+      reddit: {
+        display: redditDisplay,
+        token: redditToken,
+        subreddit: redditSubreddit,
+        posts: redditPosts,
+      },
+      youtube: {
+        last: {
+          display: youtubeDisplayLast,
+          channel: youtubeChannelLast,
+        },
+        stats: {
+          display: youtubeDisplayStats,
+          channel: youtubeChannelStats,
+        },
+        tokens: youtubeToken ? youtubeToken : {},
       }
     }, { merge: true }).catch(err => {
       console.log(err);
     });
+    getDoc(settingsRef).then(settingsDoc => {
+      setSettings(settingsDoc);
+    })
+  }
+
+  const setSettings = (settingsDoc) => {
+    //weather
+    setWeatherDisplay(settingsDoc.data().weather.display);
+    setWeatherCity(settingsDoc.data().weather.city);
+
+    //currency
+    setCurrencyDisplay(settingsDoc.data().currency.display);
+    setCurrencyFrom(settingsDoc.data().currency.from);
+    setCurrencyTo(settingsDoc.data().currency.to);
+
+    //github
+    setGithubToken(settingsDoc.data().github.token);
+    setGithubDisplay(settingsDoc.data().github.display);
+    setGithubWidget(settingsDoc.data().github.widget);
+
+    //nasa
+    setNasaDisplay(settingsDoc.data().nasa.display);
+    setNasaWidget(settingsDoc.data().nasa.widget);
+
+    //quotes
+    //random widget
+    setRandomDisplay(settingsDoc.data().quote.random.display);
+    setRandomCategory(settingsDoc.data().quote.random.category);
+    //qod widget
+    setQodDisplay(settingsDoc.data().quote.qod.display);
+    setQodCategory(settingsDoc.data().quote.qod.category);
+
+    //intranet
+    setIntranetDisplay(settingsDoc.data().intranet.display);
+    setIntranetTokenPresent(settingsDoc.data().intranet.token !== '');
+    setIntranetToken(settingsDoc.data().intranet.token);
+    setIntranetWidget(settingsDoc.data().intranet.widget);
+
+    //reddit
+    setRedditDisplay(settingsDoc.data().reddit.display);
+    setRedditToken(settingsDoc.data().reddit.tokens);
+    setRedditSubreddit(settingsDoc.data().reddit.subreddit);
+    setRedditPosts(settingsDoc.data().reddit.posts);
+
+    //youtube
+    setYoutubeToken(settingsDoc.data().youtube.tokens);
+    //statistics of channel
+    setYoutubeDisplayStats(settingsDoc.data().youtube.stats.display);
+    setYoutubeChannelStats(settingsDoc.data().youtube.stats.channel);
+    //last video from channel
+    setYoutubeDisplayLast(settingsDoc.data().youtube.last.display);
+    setYoutubeChannelLast(settingsDoc.data().youtube.last.channel);
+
+    //youtube
+    if (Object.entries(settingsDoc.data().youtube.tokens).length === 0) {
+      axios.get(process.env.REACT_APP_API + '/service/youtube/auth/link')
+        .then(res => {
+          setYoutubeLink(res.data);
+          console.log(res.data);
+        })
+    }
+    //reddit
+    if (Object.entries(settingsDoc.data().reddit.tokens).length === 0) {
+      axios.get(process.env.REACT_APP_API + '/service/reddit/auth/link')
+        .then(res => {
+          setRedditLink(res.data);
+          console.log(res.data);
+        })
+    }
   }
 
   return (
@@ -324,7 +368,7 @@ const Configure = () => {
           <div className="pl-2 text-lg mt-6 font-bold">Epitech Intranet Service</div>
           <div className="border-b-2 w-full border-gray-700 mt-1 mb-3"></div>
           <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
-            {intranetToken ? (
+            {intranetTokenPresent ? (
               <>
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
@@ -351,7 +395,7 @@ const Configure = () => {
           <div className="pl-2 text-lg mt-6 font-bold">Reddit Service</div>
           <div className="border-b-2 w-full border-gray-700 mt-1 mb-3"></div>
           <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
-            {!redditToken ? (
+            {Object.entries(redditToken).length !== 0 ? (
               <>
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
@@ -391,31 +435,31 @@ const Configure = () => {
           <div className="pl-2 text-lg mt-6 font-bold">Youtube Service</div>
           <div className="border-b-2 w-full border-gray-700 mt-1 mb-3"></div>
           <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
-            {youtubeToken ? (
+            {Object.entries(youtubeToken).length !== 0 ? (
               <>
                 <div className="text-xl font-bold">Last video widget</div>
-            <div className="flex items-center justify-between">
-              <div>Display widget</div>
-              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayLast)} checked={youtubeDisplayLast} />
-            </div>
-            <div className="flex space-x-4">
-              <div className="pl-4">Channel</div>
-              <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setYoutubeChannelLast)} value={youtubeChannelLast} />
-            </div>
+                <div className="flex items-center justify-between">
+                  <div>Display widget</div>
+                  <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayLast)} checked={youtubeDisplayLast} />
+                </div>
+                <div className="flex space-x-4">
+                  <div className="pl-4">Channel</div>
+                  <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setYoutubeChannelLast)} value={youtubeChannelLast} />
+                </div>
 
-            {/* separator between widgets */}
-            <div className="border-b-2 w-full border-gray-700 py-3"></div>
-            {/* separator between widgets */}
+                {/* separator between widgets */}
+                <div className="border-b-2 w-full border-gray-700 py-3"></div>
+                {/* separator between widgets */}
 
-            <div className="text-xl font-bold pt-4">Statistics widget</div>
-            <div className="flex items-center justify-between">
-              <div>Display widget</div>
-              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayStats)} checked={youtubeDisplayStats} />
-            </div>
-            <div className="flex space-x-4">
-              <div className="pl-4">Channel</div>
-              <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setYoutubeChannelStats)} value={youtubeChannelStats} />
-            </div>
+                <div className="text-xl font-bold pt-4">Statistics widget</div>
+                <div className="flex items-center justify-between">
+                  <div>Display widget</div>
+                  <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayStats)} checked={youtubeDisplayStats} />
+                </div>
+                <div className="flex space-x-4">
+                  <div className="pl-4">Channel</div>
+                  <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setYoutubeChannelStats)} value={youtubeChannelStats} />
+                </div>
               </>
             ) : (
               <a className="flex justify-center" href={youtubeLink}>

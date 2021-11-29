@@ -21,7 +21,6 @@ const Reddit = () => {
         console.log(url);
         console.log(code);
         const res = await axios.get(process.env.REACT_APP_API + '/service/reddit/auth/fetch_code' + '?code=' + code);
-        // console.log(res.data);
         if (!res.data.err) {
           setUser(res.data);
           await setDoc(userRef, {
