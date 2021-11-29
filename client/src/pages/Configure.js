@@ -294,7 +294,7 @@ const Configure = () => {
                   <select value={githubWidget} className="bg-gray-600 rounded px-2 py-1 text-white" onChange={(e) => handleChange(e, setGithubWidget)}>
                     <option value="Contributions">Contributions</option>
                     <option value="Pinned">Pinned</option>
-                    <option value="Stats">Stats</option>
+                    <option value="Profile">Profile</option>
                   </select>
                 </div>
               </>

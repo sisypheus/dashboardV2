@@ -24,7 +24,8 @@ const Weather = ({display, city}) => {
     <div key="weather" className="border-2 border-gray-800 dark:bg-gray-600 bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
       <p className="text-xl">Weather</p>
       <p>{city.charAt(0).toUpperCase() + city.slice(1)}</p>
-      <p>{weather?.temp}</p>
+      <p>{weather?.temp} °C</p>
+      <p>Ressenti : {weather?.feels_like} °C</p>
       { weather?.icon && <img className="w-20" src={'https://openweathermap.org/img/w/' + weather?.icon + '.png'} alt="weather" /> }
     </div>
     }
