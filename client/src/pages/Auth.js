@@ -123,7 +123,13 @@ const Auth = () => {
       reddit: {
         refresh: 5,
         display: true,
-        tokens: {},
+        tokens: {
+          access_token: "",
+          expires_in: "",
+          refresh_token: "",
+          scope: "",
+          token_type: "",
+        },
         subreddit: "memes",
         posts: 10,
       },
@@ -137,6 +143,13 @@ const Auth = () => {
           refresh: 5,
           display: true,
           channel: 'Wankil Studio',
+        },
+        tokens: {
+          access_token: "",
+          expiry_date: "",
+          refresh_token: "",
+          scope: "",
+          refresh_type: "",
         }
       }
     });
@@ -157,8 +170,8 @@ const Auth = () => {
     <>
     <Background>
       <div className="h-screen">
-        <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-lg w-full space-y-8 border-2 border-gray-800 shadow-lg px-8 py-16 rounded-xl dark:bg-dark-sidebar">
+        <div className="min-h-full flex bg-light-sidebar dark:bg-dark-sidebar items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-lg w-full space-y-8 bg-light shadow-lg px-8 py-16 rounded-xl dark:bg-dark">
             <div>
               <img
                 className="mx-auto h-12 w-auto"
