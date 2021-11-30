@@ -37,16 +37,16 @@ const Github = ({ display, token, widget }) => {
       case 'Pinned':
         return (
           <div>
-          <div className="grid grid-cols-2 justify-center space-x-2 px-4">
+          <div className="pt-2 grid grid-cols-2 justify-center space-x-2 px-4">
             {repos.map((repo, index) => {
               console.log(repo);
               return (
                 <div key={index} className="flex flex-col items-center px-2 py-2">
-                  <p className="font-semibold">{repo.node.name}</p>
-                  <p className="text-center text-xs">{repo.node?.description.length > 60 ? repo.node.description.substr(0, 60) + '...' : repo.node.description}</p>
-                  <div className="flex items-center justify-center text-center space-x-2">
-                    <p>{repo.node.stargazerCount} stars</p>
-                    <p>{repo.node.forks.totalCount} forks</p>
+                  <p className="text-green">{repo.node.name}</p>
+                  <p className="text-text text-center italic text-sm">{repo.node?.description?.length > 70 ? repo.node.description.substr(0, 70) + '...' : repo.node.description}</p>
+                  <div className="text-text text-sm flex items-center justify-center text-center space-x-2">
+                    <p><span className="text-green">{repo.node.stargazerCount}</span> star(s)</p>
+                    <p><span className="text-green">{repo.node.forks.totalCount}</span> fork(s)</p>
                   </div>
                 </div>
               )
@@ -60,9 +60,9 @@ const Github = ({ display, token, widget }) => {
             <p className="text-lg font-medium">{profile?.name}</p>
             <p className="px-4 text-center">{profile?.bio}</p>
             <div className="flex items-center justify-center mt-1 space-x-4">
-              <p>{profile?.starredRepositories?.totalCount} stars</p>
-              <p>{profile?.followers?.totalCount} followers</p>
-              <p>{profile?.following?.totalCount} following</p>
+              <p className="pt-2 text-text"><span className="text-green">{profile?.starredRepositories?.totalCount}</span> star(s)</p>
+              <p className="pt-2 text-text"><span className="text-green">{profile?.followers?.totalCount}</span> follower(s)</p>
+              <p className="pt-2 text-text"><span className="text-green">{profile?.following?.totalCount}</span> following</p>
             </div>
           </>
         )
@@ -72,8 +72,8 @@ const Github = ({ display, token, widget }) => {
   return (
     <>
       {display &&
-        <div key="github" className="border-2 border-gray-800 dark:bg-gray-600 bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
-          <p className="text-xl">Github</p>
+        <div key="github" className="dark:bg-widgets bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
+          <p className="text-green text-2xl tracking-widest font-black">Github</p>
           {displayWidget(widget)}
         </div>
       }

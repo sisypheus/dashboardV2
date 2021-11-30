@@ -21,11 +21,11 @@ const Weather = ({display, city}) => {
   return (
     <>
     {display !== false && 
-    <div key="weather" className="border-2 border-gray-800 dark:bg-gray-600 bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
-      <p className="text-xl">Weather</p>
-      <p>{city.charAt(0).toUpperCase() + city.slice(1)}</p>
-      <p>{weather?.temp} °C</p>
-      <p>Ressenti : {weather?.feels_like} °C</p>
+    <div key="weather" className="dark:bg-widgets bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
+      <p className="text-purple text-2xl tracking-widest font-black">Weather</p>
+      <p className="pt-2 font-bold text-text text-xl">{city.charAt(0).toUpperCase() + city.slice(1)}</p>
+      <p className="text-purple">{weather?.temp} °C</p>
+      <p className="pt-2 text-text italic">Feels like: {weather?.feels_like} °C</p>
       { weather?.icon && <img className="w-20" src={'https://openweathermap.org/img/w/' + weather?.icon + '.png'} alt="weather" /> }
     </div>
     }

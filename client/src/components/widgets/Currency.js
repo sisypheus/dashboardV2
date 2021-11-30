@@ -20,11 +20,11 @@ const Currency = ({ from, to, display }) => {
   return (
     <>
     { display ? (
-      <div key="currency" className="border-2 border-gray-800 dark:bg-gray-600 bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
-        <p className="text-xl">Currency rate</p>
-        <p className="font-bold text-md">{from} <span className="text-blue-300">=></span> {to}</p>
-        <p className="p-2 text-gray-300 font-bold">{rate ? parseFloat(rate).toPrecision(4) : rate}</p>
-        <GiMoneyStack className="text-3xl text-green-500" />
+      <div key="currency" className="dark:bg-widgets bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
+        <p className="text-orange text-2xl tracking-widest font-black">Currency rate</p>
+        <p className="pt-2 text-md text-text">{from} <span className="text-blue-300">→</span> {to}</p>
+        <p className="pb-2 text-gray-300 text-orange italic">{rate ? parseFloat(rate).toPrecision(4) : rate}</p>
+        <GiMoneyStack className="text-3xl text-green" />
     </div>
     ) : (
       <div></div>
