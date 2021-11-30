@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 
-const Github = () => {
+const GithubToken = () => {
   const [user, setUser] = useState('');
   const history = useHistory();
 
@@ -67,4 +67,4 @@ const Github = () => {
   )
 }
 
-export default Github;
+export default GithubToken;

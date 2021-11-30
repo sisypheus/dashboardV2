@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 
-const Reddit = () => {
+const RedditToken = () => {
   const [user, setUser] = useState('');
   const history = useHistory();
 
@@ -70,5 +70,5 @@ const Reddit = () => {
   )
 }
 
-export default Reddit;
+export default RedditToken;
 
