@@ -18,7 +18,7 @@ const Widgets = ({ settings }) => {
   const layout = [
     { i: 'weather', x: 0, y: 0, w: 5, h: 7 },
     { i: 'currency', x: 5, y: 0, w: 4, h: 5 },
-    { i: 'github', x: 9, y: 0, w: settings?.github?.widget === 'Contributions' ? 11 : (settings?.github?.widget === 'Pinned' ? 6 : 5 ), h: settings?.github?.widget === 'Contributions' ? 5 : (settings?.github?.widget === 'Profile' ? 4 : 9) },
+    { i: 'github', x: 9, y: 0, w: settings?.github?.widget === 'Contributions' ? 11 : (settings?.github?.widget === 'Pinned' ? 6 : 5 ), h: settings?.github?.widget === 'Contributions' ? 5 : (settings?.github?.widget === 'Profile' ? 4 : 11) },
     { i: 'nasa', x: 0, y:8, w: 5, h: 7 },
     { i: 'youtube_stats', x: 20, y: 0, w: 4, h: 5 },
     { i: 'youtube_last', x: 9, y: 8, w: 4, h: 5 },

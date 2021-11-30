@@ -4,7 +4,7 @@ export const YoutubeStats = ({display, widget, token}) => {
 
   
   useEffect(() => {
-    if (display) {
+    if (display && token) {
       return getYoutube()
     }
   }, [])

@@ -93,13 +93,13 @@ const Auth = () => {
       },
       github: {
         refresh: 5,
-        display: true,
+        display: false,
         token: "",
         widget: "Contributions",
       },
       intranet: {
         refresh: 5,
-        display: true,
+        display: false,
         token: "",
         widget: "Stats",
       },
@@ -122,35 +122,23 @@ const Auth = () => {
       },
       reddit: {
         refresh: 5,
-        display: true,
-        tokens: {
-          access_token: "",
-          expires_in: "",
-          refresh_token: "",
-          scope: "",
-          token_type: "",
-        },
+        display: false,
+        tokens: {},
         subreddit: "memes",
         posts: 10,
       },
       youtube: {
         last: {
           refresh: 5,
-          display: true,
+          display: false,
           channel: 'Wankil Studio',
         },
         stats: {
           refresh: 5,
-          display: true,
+          display: false,
           channel: 'Wankil Studio',
         },
-        tokens: {
-          access_token: "",
-          expiry_date: "",
-          refresh_token: "",
-          scope: "",
-          refresh_type: "",
-        }
+        tokens: {}
       }
     });
     return;

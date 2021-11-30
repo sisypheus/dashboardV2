@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 const Intra = ({display, widget, token}) => {
 
   useEffect(() => {
-    if (display) {
+    if (display && token) {
       return getIntra()
     }
   }, [])

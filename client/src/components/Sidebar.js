@@ -70,93 +70,93 @@ const Sidebar = ({ user, setSettings, settings }) => {
           <button onClick={() => auth.signOut()} className="mb-10 hover:bg-red-700 py-2 mt-4 px-4 bg-red-600 rounded-lg shadow-lg text-white font-bold">
             Log out
           </button>
-          <div class="container">
+          <div className="container">
             <p className="text-sidebar">Currency</p>
-            <div class="contain-switch">
-              <label class="switch">
-                <input type="checkbox" onChange={handleChangeCurrency} checked={settings?.currency?.display}/>
-                <span class="slider round"></span>
+            <div className="contain-switch">
+              <label className="switch">
+                <input type="checkbox" onChange={handleChangeCurrency} checked={settings?.currency?.display ?? false}/>
+                <span className="slider round"></span>
               </label>
             </div>
           </div>
-          <div class="container">
+          <div className="container">
             <p className="text-sidebar">Github</p>
-            <div class="contain-switch">
-              <label class="switch">
-                <input type="checkbox" onChange={handleChangeGithub} checked={settings?.github?.display}/>
-                <span class="slider round"></span>
+            <div className="contain-switch">
+              <label className="switch">
+                <input type="checkbox" onChange={handleChangeGithub} checked={settings?.github?.display ?? false}/>
+                <span className="slider round"></span>
               </label>
             </div>
           </div>
-          <div class="container">
+          <div className="container">
             <p className="text-sidebar">Nasa</p>
-            <div class="contain-switch">
-              <label class="switch">
-                <input type="checkbox" onChange={handleChangeNasa} checked={settings?.nasa?.display}/>
-                <span class="slider round"></span>
+            <div className="contain-switch">
+              <label className="switch">
+                <input type="checkbox" onChange={handleChangeNasa} checked={settings?.nasa?.display ?? false}/>
+                <span className="slider round"></span>
               </label>
             </div>
           </div>
-          <div class="container">
+          <div className="container">
             <p className="text-sidebar">Intranet</p>
-            <div class="contain-switch">
-              <label class="switch">
-                <input type="checkbox" onChange={handleChangeIntranet} checked={settings?.intranet?.display}/>
-                <span class="slider round"></span>
+            <div className="contain-switch">
+              <label className="switch">
+                <input type="checkbox" onChange={handleChangeIntranet} checked={settings?.intranet?.display ?? false}/>
+                <span className="slider round"></span>
               </label>
             </div>
           </div>
-          <div class="container">
-            <p className="text-sidebar">Quote of the day</p>
-            <div class="contain-switch">
-              <label class="switch">
-                <input type="checkbox" onChange={handleChangeQodQuotes} checked={settings?.quote?.qod?.display}/>
-                <span class="slider round"></span>
+          <div className="container">
+            <p className="text-sidebar">Q. of the day</p>
+            <div className="contain-switch">
+              <label className="switch">
+                <input type="checkbox" onChange={handleChangeQodQuotes} checked={settings?.quote?.qod?.display ?? false}/>
+                <span className="slider round"></span>
               </label>
             </div>
           </div>
-          <div class="container">
+          <div className="container">
             <p className="text-sidebar">Random quote</p>
-            <div class="contain-switch">
-              <label class="switch">
-                <input type="checkbox" onChange={handleChangeRandomQuotes} checked={settings?.quote?.random?.display}/>
-                <span class="slider round"></span>
+            <div className="contain-switch">
+              <label className="switch">
+                <input type="checkbox" onChange={handleChangeRandomQuotes} checked={settings?.quote?.random?.display ?? false}/>
+                <span className="slider round"></span>
               </label>
             </div>
           </div>
-          <div class="container">
+          <div className="container">
             <p className="text-sidebar">Reddit</p>
-            <div class="contain-switch">
-              <label class="switch">
-                <input type="checkbox" onChange={handleChangeReddit} checked={settings?.reddit?.display}/>
-                <span class="slider round"></span>
+            <div className="contain-switch">
+              <label className="switch">
+                <input type="checkbox" onChange={handleChangeReddit} checked={settings?.reddit?.display ?? false}/>
+                <span className="slider round"></span>
               </label>
             </div>
           </div>
-          <div class="container">
+          <div className="container">
             <p className="text-sidebar">Youtube last</p>
-            <div class="contain-switch">
-              <label class="switch">
-                <input type="checkbox" onChange={handleChangeLastYoutube} checked={settings?.youtube?.last?.display}/>
-                <span class="slider round"></span>
+            <div className="contain-switch">
+              <label className="switch">
+                <input type="checkbox" onChange={handleChangeLastYoutube} checked={settings?.youtube?.last?.display ?? false}/>
+                <span className="slider round"></span>
               </label>
             </div>
           </div>
-          <div class="container">
+          <div className="container">
             <p className="text-sidebar">Youtube stats</p>
-            <div class="contain-switch">
-              <label class="switch">
-                <input type="checkbox" onChange={handleChangeStatsYoutube} checked={settings?.youtube?.stats?.display}/>
-                <span class="slider round"></span>
+            <div className="contain-switch">
+              <label className="switch">
+                <input type="checkbox" onChange={handleChangeStatsYoutube} checked={settings?.youtube?.stats?.display ?? false}/>
+                <span className="slider round"></span>
               </label>
             </div>
           </div>
-          <div class="container">
+          <div className="container">
             <p className="text-sidebar">Weather</p>
-            <div class="contain-switch">
-              <label class="switch">
-                <input type="checkbox" onChange={handleChangeWeather} checked={settings?.weather?.display}/>
-                <span class="slider round"></span>
+            <div className="contain-switch">
+              <label className="switch">
+                <input type="checkbox" onChange={handleChangeWeather} checked={settings?.weather?.display ?? false}/>
+                <span className="slider round"></span>
               </label>
             </div>
           </div>

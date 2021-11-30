@@ -84,6 +84,7 @@ const Configure = () => {
           setUser(userDoc.data());
         });
         getDoc(settingsRef).then(settingsDoc => {
+          console.log(settingsDoc.data());
           setSettings(settingsDoc);
         });
       } else {

@@ -4,7 +4,7 @@ const Reddit = ({display, subreddit, posts, token}) => {
 
   
   useEffect(() => {
-    if (display) {
+    if (display && token) {
       return getReddit()
     }
   }, [])
