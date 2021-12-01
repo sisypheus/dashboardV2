@@ -27,19 +27,19 @@ const Intra = ({display, widget, token}) => {
     if (widget === 'stats') {
       console.log(user);
       return (
-        <div className="flex flex-row space-x-2 font-bold text-purple p-2">
-          <p><span className="text-black">GPA : </span>{user.gpa}</p>
-          <p><span className="text-black">Credits : </span>{user.credits} C</p>
+        <div className="flex flex-row space-x-2 text-purple p-2">
+          <p><span className="pt-2 text-text">GPA: </span>{user.gpa}</p>
+          <p><span className="pt-2 text-text"> & credits: </span>{user.credits}</p>
         </div>
       )
     } else if (widget === 'notifications') {
       const regex = /(<([^>]+)>)/ig;
       return (
-        <div className="flex flex-col space-y-2 p-2 px-4 mb-2 overflow-scroll overflow-x-hidden">
+        <div className="flex flex-col space-y-2 px-4 my-2 mr-2 overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-500">
           {notifications.map((notif, index) => {
             const res = notif.replace(regex, '');
             return (
-              <p className="text-white max-w-prose border-t-2" key={index}>{res}</p>
+              <p className="text-justify max-w-prose border-gray-500 border-t text-purple  py-3" key={index}>{res}</p>
             )
           })}
         </div>
@@ -51,7 +51,7 @@ const Intra = ({display, widget, token}) => {
     <>
       { display &&
         <div key="nasa" className="dark:bg-widgets bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
-          <p className="text-purple text-2xl tracking-widest font-black">Intranet</p>
+          <p className="pt-3 text-purple text-2xl tracking-widest font-black">Intranet</p>
           {displayWidget(widget)}
         </div>
       }

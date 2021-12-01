@@ -1,3 +1,5 @@
+const { GiWhiteBook } = require('react-icons/gi');
+
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: 'class',
@@ -19,7 +21,7 @@ module.exports = {
         'blue': '#48c7d0',
         'saumon': '#f7a38e',
         'red' :'#df4576',
-        'text': '#506477',
+        'text': '#6e7a85',
         'sidebar': '#687078',
       },
       color: ['checked'],
@@ -28,5 +30,7 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 }
