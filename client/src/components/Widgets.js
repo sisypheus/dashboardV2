@@ -20,7 +20,7 @@ const Widgets = ({ settings }) => {
     { i: 'currency', x: 5, y: 0, w: 4, h: 5 },
     { i: 'github', x: 9, y: 0, w: settings?.github?.widget === 'Contributions' ? 11 : (settings?.github?.widget === 'Pinned' ? 6 : 5 ), h: settings?.github?.widget === 'Contributions' ? 5 : (settings?.github?.widget === 'Profile' ? 4 : 11) },
     { i: 'nasa', x: 0, y:8, w: 6, h: 8 },
-    { i: 'youtube_stats', x: 20, y: 0, w: 4, h: 5 },
+    { i: 'youtube_stats', x: 20, y: 0, w: 6, h: 7 },
     { i: 'youtube_last', x: 9, y: 8, w: 4, h: 5 },
     { i: 'reddit', x: 15, y: 5, w: 5, h: 7 },
     { i: 'intra', x: 5, y: 15, w: 4, h: 5 },
@@ -80,10 +80,10 @@ const Widgets = ({ settings }) => {
             <Reddit display={settings?.reddit?.display} subreddit={settings?.reddit?.subreddit} posts={settings?.reddit?.posts} token={settings?.reddit?.tokens}/>
           </div>
           <div key="youtube_stats">
-            <YoutubeStats display={settings?.youtube?.stats?.display} channel={settings?.youtube?.stats?.channel} token={settings?.youtube?.tokens}/>
+            <YoutubeStats display={settings?.youtube?.stats?.display} channelId={settings?.youtube?.stats?.channelId} channel={settings?.youtube?.stats?.channel} token={settings?.youtube?.tokens}/>
           </div>
           <div key="youtube_last">
-            <YoutubeLast display={settings?.youtube?.last?.display} channel={settings?.youtube?.last?.channel} token={settings?.youtube?.tokens}/>
+            <YoutubeLast display={settings?.youtube?.last?.display} channelId={settings?.youtube?.last?.channelId} channel={settings?.youtube?.last?.channel} token={settings?.youtube?.tokens}/>
           </div>
         </ReactGridLayout>
       )}

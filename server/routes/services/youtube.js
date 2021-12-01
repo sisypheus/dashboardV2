@@ -10,8 +10,6 @@ const getAuthClient = () => {
   return new OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_SECRET,
-    //change this for the front end
-    // 'http://localhost:8080/service/youtube/auth/callback'
     'http://localhost:3000/youtube',
   );
 }
@@ -112,14 +110,16 @@ router.get('/channel/stats', async (req, res) => {
     auth: oauth2Client,
     part: 'snippet,statistics',
     id: channelId,
+    maxResults: 1
   }, (err, response) => {
     if (err) {
+      console.log(err, 'fdsjqkm');
       res.send({err});
     } else {
-      if (response.data.items.length > 0)
-        res.send({logo: response.data.items[0].snippet.thumbnails.default.url, title: response.data.items[0].snippet.title, views: response.data.items[0].statistics.viewCount, subscribers: response.data.items[0].statistics.subscriberCount, videos: response.data.items[0].statistics.videoCount});
+      if (response.data.pageInfo.totalResults === 0)
+        res.send({err: 'Channel not found'});
       else
-        res.send({err: 'No channel found'});
+        res.send({logo: response.data.items[0].snippet.thumbnails.default.url, title: response.data.items[0].snippet.title, views: response.data.items[0].statistics.viewCount, subscribers: response.data.items[0].statistics.subscriberCount, videos: response.data.items[0].statistics.videoCount});
     }
   })
 })

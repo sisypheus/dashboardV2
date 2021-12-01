@@ -129,11 +129,13 @@ const Auth = () => {
       },
       youtube: {
         last: {
+          channelId: 'UCYGjxo5ifuhnmvhPvCc3DJQ',
           refresh: 5,
           display: false,
           channel: 'Wankil Studio',
         },
         stats: {
+          channelId: 'UCYGjxo5ifuhnmvhPvCc3DJQ',
           refresh: 5,
           display: false,
           channel: 'Wankil Studio',
