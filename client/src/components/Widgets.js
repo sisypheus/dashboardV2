@@ -22,7 +22,7 @@ const Widgets = ({ settings, uid }) => {
     { i: 'nasa', x: 0, y:8, w: 6, h: 8 },
     { i: 'youtube_stats', x: 20, y: 0, w: 6, h: 7 },
     { i: 'youtube_last', x: 9, y: 8, w: 4, h: 5 },
-    { i: 'reddit', x: 15, y: 5, w: 5, h: 7 },
+    { i: 'reddit', x: 15, y: 5, w: 7, h: 8 },
     { i: 'intra', x: 5, y: 15, w: settings?.intranet?.widget === 'stats' ? 4 : 5, h: settings?.intranet?.widget === 'stats' ? 3 : 6},
     { i: 'quote_day', x: 9, y: 15, w: 4, h: 5 },
     { i: 'quote_random', x: 0, y: 22, w: 5, h: 5 },
@@ -77,7 +77,7 @@ const Widgets = ({ settings, uid }) => {
             <QuoteDay display={settings?.quote?.qod?.display} category={settings?.quote?.qod?.category}/>
           </div>
           <div key="reddit">
-            <Reddit uid={uid} display={settings?.reddit?.display} subreddit={settings?.reddit?.subreddit} posts={settings?.reddit?.posts} token={settings?.reddit?.tokens}/>
+            <Reddit uid={uid} refresh={settings?.reddit?.refresh} display={settings?.reddit?.display} subreddit={settings?.reddit?.subreddit} posts={settings?.reddit?.posts} token={settings?.reddit?.tokens}/>
           </div>
           <div key="youtube_stats">
             <YoutubeStats display={settings?.youtube?.stats?.display} channelId={settings?.youtube?.stats?.channelId} channel={settings?.youtube?.stats?.channel} token={settings?.youtube?.tokens}/>

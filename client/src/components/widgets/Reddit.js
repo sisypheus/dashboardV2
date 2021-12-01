@@ -3,14 +3,21 @@ import { auth, db } from '../../firebase';
 import { setDoc, getDoc, doc } from '@firebase/firestore';
 import axios from 'axios';
 
-const Reddit = ({display, subreddit, posts, token, uid}) => {
+const Reddit = ({display, subreddit, posts, token, uid, refresh}) => {
   const [edito, setPosts] = useState([]);
 
-  console.log(uid);
   useEffect(() => {
     if (display && token) {
-      return getReddit()
+      console.log('ici');
+      getReddit()
     }
+    const interval = setInterval(() => {
+      console.log('refreshing Reddit widget');
+      if (display && token) {
+        return getReddit()
+      }
+    }, refresh * 1000 * 60);
+    return () => clearInterval(interval);
   }, [])
   
   const getReddit = async () => {
