@@ -6,6 +6,7 @@ import { getDoc, doc, updateDoc, setDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 import { circularProgressClasses, Snackbar } from '@mui/material';
 import axios from 'axios';
+import './switch.css';
 
 const Configure = () => {
   const [user, setUser] = useState(null);
@@ -244,7 +245,10 @@ const Configure = () => {
           <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
             <div className="flex items-center justify-between">
               <div>Display widget</div>
-              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setWeatherDisplay)} checked={weatherDisplay} />
+              <label className="switch">
+                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setWeatherDisplay)} checked={weatherDisplay}/>
+                <span className="slider round"></span>
+              </label>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">City</div>
@@ -258,7 +262,10 @@ const Configure = () => {
           <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
             <div className="flex items-center justify-between">
               <div>Display widget</div>
-              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setCurrencyDisplay)} checked={currencyDisplay} />
+              <label className="switch">
+                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setCurrencyDisplay)} checked={currencyDisplay}/>
+                <span className="slider round"></span>
+              </label>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">From</div>
@@ -288,7 +295,10 @@ const Configure = () => {
               <>
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
-                  <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setGithubDisplay)} checked={githubDisplay} />
+                  <label className="switch">
+                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setGithubDisplay)} checked={githubDisplay}/>
+                    <span className="slider round"></span>
+                  </label>
                 </div>
                 <div className="flex space-x-4">
                   <div>Widget type</div>
@@ -317,7 +327,10 @@ const Configure = () => {
           <div className="max-w-sm m-auto pl-6 font-mono space-y-2">
             <div className="flex items-center justify-between">
               <div>Display widget</div>
-              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setNasaDisplay)} checked={nasaDisplay} />
+              <label className="switch">
+                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setNasaDisplay)} checked={nasaDisplay}/>
+                <span className="slider round"></span>
+              </label>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">Type</div>
@@ -335,7 +348,10 @@ const Configure = () => {
             <div className="text-xl font-bold">Random quote widget</div>
             <div className="flex items-center justify-between">
               <div>Display widget</div>
-              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setRandomDisplay)} checked={randomDisplay} />
+              <label className="switch">
+                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setRandomDisplay)} checked={randomDisplay}/>
+                <span className="slider round"></span>
+              </label>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">Category</div>
@@ -353,7 +369,10 @@ const Configure = () => {
             <div className="text-xl font-bold pt-4">Quote of the day widget</div>
             <div className="flex items-center justify-between">
               <div>Display widget</div>
-              <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setQodDisplay)} checked={qodDisplay} />
+              <label className="switch">
+                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setQodDisplay)} checked={qodDisplay}/>
+                <span className="slider round"></span>
+              </label>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">Category</div>
@@ -373,7 +392,10 @@ const Configure = () => {
               <>
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
-                  <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setWeatherDisplay)} checked={weatherDisplay} />
+                  <label className="switch">
+                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setIntranetDisplay)} checked={intranetDisplay}/>
+                    <span className="slider round"></span>
+                  </label>
                 </div>
                 <div className="flex space-x-4">
                   <div className="pl-4">Widget</div>
@@ -400,7 +422,10 @@ const Configure = () => {
               <>
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
-                  <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setRedditDisplay)} checked={redditDisplay} />
+                  <label className="switch">
+                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setRedditDisplay)} checked={redditDisplay}/>
+                    <span className="slider round"></span>
+                  </label>
                 </div>
                 <div className="flex-col space-y-2">
                   <div className="flex space-x-4">
@@ -441,7 +466,10 @@ const Configure = () => {
                 <div className="text-xl font-bold">Last video widget</div>
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
-                  <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayLast)} checked={youtubeDisplayLast} />
+                  <label className="switch">
+                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayLast)} checked={youtubeDisplayLast}/>
+                    <span className="slider round"></span>
+                  </label>
                 </div>
                 <div className="flex space-x-4">
                   <div className="pl-4">Channel</div>
@@ -455,7 +483,10 @@ const Configure = () => {
                 <div className="text-xl font-bold pt-4">Statistics widget</div>
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
-                  <input type="checkbox" className="checked:text-green-500 rounded w-4 h-4" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayStats)} checked={youtubeDisplayStats} />
+                  <label className="switch">
+                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayStats)} checked={youtubeDisplayStats}/>
+                    <span className="slider round"></span>
+                  </label>
                 </div>
                 <div className="flex space-x-4">
                   <div className="pl-4">Channel</div>
@@ -485,7 +516,7 @@ const Configure = () => {
         open={settingsChanged}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <button onClick={submitSettings} className="py-2 px-4 bg-green-500 rounded-md text-gray-200 font-bold">Apply settings</button>
+        <button onClick={submitSettings} className="py-2 px-4 hover:bg-green-600 bg-green-500 rounded-md text-gray-200 font-bold">Apply settings</button>
       </Snackbar>
     </Background>
   )
