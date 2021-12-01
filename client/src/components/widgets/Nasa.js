@@ -29,7 +29,7 @@ const Nasa = ({ display, widget }) => {
       } else {
         return (
           <div className="overflow-hidden object-fit rounded-b-xl mt-1">
-            <img src={data.url} className="rounded-xl" alt='Astronomy picture of the day' />
+            <img src={data.hdurl} className="rounded-xl" alt='Astronomy picture of the day' />
           </div>
         )
       }

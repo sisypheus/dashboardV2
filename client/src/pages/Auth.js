@@ -101,7 +101,7 @@ const Auth = () => {
         refresh: 5,
         display: false,
         token: "",
-        widget: "Stats",
+        widget: "stats",
       },
       nasa: {
         refresh: 5,
