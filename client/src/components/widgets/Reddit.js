@@ -1,8 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react';
+import { auth, db } from '../../firebase';
+import { setDoc, getDoc, doc } from '@firebase/firestore';
+import axios from 'axios';
 
-const Reddit = ({display, subreddit, posts, token}) => {
+const Reddit = ({display, subreddit, posts, token, uid}) => {
+  const [edito, setPosts] = useState([]);
 
-  
+  console.log(uid);
   useEffect(() => {
     if (display && token) {
       return getReddit()
@@ -10,12 +14,32 @@ const Reddit = ({display, subreddit, posts, token}) => {
   }, [])
   
   const getReddit = async () => {
-    //refresh token
-
+    if ((token.expires_in) - (new Date().getTime() / 1000) <= 60 * 15) {
+      const res = await axios.get(process.env.REACT_APP_API + '/service/reddit/token/refresh?refresh_token=' + token.refresh_token);
+      const document = doc(db, 'settings/' + uid);
+      await setDoc(document, {
+        reddit: {
+          tokens: res.data,
+        }
+      }, {merge: true}); 
+      token = res.data;
+    }
+    const res = await axios.get(process.env.REACT_APP_API + '/service/reddit/subreddit?subreddit=' + subreddit + '&token=' + token.access_token + '&number=' + posts);
+    setPosts(res.data?.data?.children);
   }
 
   const displayWidget = () => {
-    return <p>Wip</p>
+    return (
+      <div className="flex flex-col space-y-2 px-4 my-2 overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-500">
+        {edito ? edito.map((post, i) => {
+          return (
+            <div key={i}>
+              <p className="text-justify max-w-prose border-gray-500 border-t text-green py-3">{post.data.title}</p>
+            </div>
+          )
+        }) : null}
+      </div>
+    )
   }
 
   return (

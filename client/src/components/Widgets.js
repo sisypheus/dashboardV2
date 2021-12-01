@@ -12,7 +12,7 @@ import { QuoteDay, QuoteRandom } from './widgets/Quote';
 import Reddit from './widgets/Reddit';
 import Intra from './widgets/Intra';
 
-const Widgets = ({ settings }) => {
+const Widgets = ({ settings, uid }) => {
   const ReactGridLayout = WidthProvider(RGL);
 
   const layout = [
@@ -77,7 +77,7 @@ const Widgets = ({ settings }) => {
             <QuoteDay display={settings?.quote?.qod?.display} category={settings?.quote?.qod?.category}/>
           </div>
           <div key="reddit">
-            <Reddit display={settings?.reddit?.display} subreddit={settings?.reddit?.subreddit} posts={settings?.reddit?.posts} token={settings?.reddit?.tokens}/>
+            <Reddit uid={uid} display={settings?.reddit?.display} subreddit={settings?.reddit?.subreddit} posts={settings?.reddit?.posts} token={settings?.reddit?.tokens}/>
           </div>
           <div key="youtube_stats">
             <YoutubeStats display={settings?.youtube?.stats?.display} channelId={settings?.youtube?.stats?.channelId} channel={settings?.youtube?.stats?.channel} token={settings?.youtube?.tokens}/>

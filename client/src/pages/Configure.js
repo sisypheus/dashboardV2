@@ -168,7 +168,6 @@ const Configure = () => {
       },
       reddit: {
         display: redditDisplay,
-        token: redditToken,
         subreddit: redditSubreddit,
         posts: redditPosts,
       },

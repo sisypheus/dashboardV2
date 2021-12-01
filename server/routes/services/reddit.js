@@ -5,8 +5,6 @@ import fetch from 'node-fetch';
 
 const router = express.Router();
 
-let time = new Date();
-
 router.get('/auth/link', async (req, res) => {
   res.send(`https://www.reddit.com/api/v1/authorize?client_id=${process.env.REDDIT_CLIENT_ID}&response_type=code&state=random&redirect_uri=${process.env.REDDIT_REDIRECT_URI}&scope=account,identity,read&duration=permanent`)
 });
@@ -14,6 +12,7 @@ router.get('/auth/link', async (req, res) => {
 router.get('/token/refresh', async (req, res) => {
   const {refresh_token} = req.query;
 
+  console.log(refresh_token, 'refresh token');
   const response = await fetch('https://www.reddit.com/api/v1/access_token', {
     method: 'POST',
     headers: {
@@ -21,9 +20,10 @@ router.get('/token/refresh', async (req, res) => {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     body: `grant_type=refresh_token&refresh_token=${refresh_token}`
-  }).then(res => res.json());
-
-  res.send(response);
+  }).then(res => res.json()).then(data => {
+    data.expires_in = ((data.expires_in + new Date().getTime() / 1000)).toString().split('.')[0];
+    res.send(data);
+  });
 })
 
 router.get('/auth/fetch_code', async (req, res) => {

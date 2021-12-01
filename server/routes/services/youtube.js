@@ -126,7 +126,7 @@ router.get('/channel/stats', async (req, res) => {
     maxResults: 1
   }, (err, response) => {
     if (err) {
-      console.log(err, 'fdsjqkm');
+      // console.log(err, 'fdsjqkm');
       res.send({err});
     } else {
       if (response.data.pageInfo.totalResults === 0)
