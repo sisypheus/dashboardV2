@@ -11,6 +11,7 @@ import './switch.css';
 const Configure = () => {
   const [user, setUser] = useState(null);
   const history = useHistory();
+  const [settingsData, setSettingsData] = useState({});
 
   //weather
   const [weatherDisplay, setWeatherDisplay] = useState(false);
@@ -58,10 +59,14 @@ const Configure = () => {
   const [youtubeToken, setYoutubeToken] = useState('');
   //last video from channel
   const [youtubeDisplayLast, setYoutubeDisplayLast] = useState(false);
+  const [youtubeChannelLastOriginal, setYoutubeChannelLastOriginal] = useState('');
+  const [youtubeChannelLastId, setYoutubeChannelLastId] = useState('');
   const [youtubeChannelLast, setYoutubeChannelLast] = useState('');
   //statistics of channel
   const [youtubeDisplayStats, setYoutubeDisplayStats] = useState(false);
+  const [youtubeChannelStatsOriginal, setYoutubeChannelStatsOriginal] = useState('');
   const [youtubeChannelStats, setYoutubeChannelStats] = useState('');
+  const [youtubeChannelStatsId, setYoutubeChannelStatsId] = useState('');
 
   //snackbar
   const [settingsChanged, setSettingsChanged] = useState(false);
@@ -86,6 +91,7 @@ const Configure = () => {
         });
         getDoc(settingsRef).then(settingsDoc => {
           console.log(settingsDoc.data());
+          setSettingsData(settingsDoc.data());
           setSettings(settingsDoc);
         });
       } else {
@@ -100,6 +106,17 @@ const Configure = () => {
     setter(e.target.checked);
   };
 
+  const handleYoutubeChannelChange = (e, type) => {
+    setSettingsChanged(true);
+    if (type == 'last') {
+      // setYoutubeChannelLastId('');
+      setYoutubeChannelLast(e.target.value);
+    } else {
+      // setYoutubeChannelStatsId('');
+      setYoutubeChannelStats(e.target.value);
+    }
+  }
+
   const handleChange = (e, setter) => {
     setSettingsChanged(true);
     setter(e.target.value);
@@ -107,6 +124,15 @@ const Configure = () => {
 
   const submitSettings = async () => {
     setSettingsChanged(false);
+    let channelIdLast = null;
+    let channelIdStats = null;
+    if (youtubeChannelLastOriginal != youtubeChannelLast) {
+      const res = await axios.get(process.env.REACT_APP_API + '/service/youtube/channel/id?channel=' + youtubeChannelLast + '&access_token=' + youtubeToken.access_token + '&refresh_token=' + youtubeToken.refresh_token + '&token_type=' + youtubeToken.token_type + '&expires_in=' + youtubeToken.expires_in + '&scope=' + youtubeToken.scope);
+      channelIdLast = res.data.id;
+    } else if (youtubeChannelStatsOriginal != youtubeChannelStats) {
+      const res = await axios.get(process.env.REACT_APP_API + '/service/youtube/channel/id?channel=' + youtubeChannelStats + '&access_token=' + youtubeToken.access_token + '&refresh_token=' + youtubeToken.refresh_token + '&token_type=' + youtubeToken.token_type + '&expires_in=' + youtubeToken.expires_in + '&scope=' + youtubeToken.scope);
+      channelIdStats = res.data.id;
+    }
     await setDoc(settingsRef, {
       weather: {
         display: weatherDisplay,
@@ -148,10 +174,12 @@ const Configure = () => {
       },
       youtube: {
         last: {
+          channelId: channelIdLast ? channelIdLast : youtubeChannelLastId,
           display: youtubeDisplayLast,
           channel: youtubeChannelLast,
         },
         stats: {
+          channelId: channelIdStats ? channelIdStats : youtubeChannelStatsId,
           display: youtubeDisplayStats,
           channel: youtubeChannelStats,
         },
@@ -209,9 +237,13 @@ const Configure = () => {
     //statistics of channel
     setYoutubeDisplayStats(settingsDoc.data().youtube.stats.display);
     setYoutubeChannelStats(settingsDoc.data().youtube.stats.channel);
+    setYoutubeChannelStatsOriginal(settingsDoc.data().youtube.stats.channel);
+    setYoutubeChannelStatsId(settingsDoc.data().youtube.stats.channelId);
     //last video from channel
     setYoutubeDisplayLast(settingsDoc.data().youtube.last.display);
     setYoutubeChannelLast(settingsDoc.data().youtube.last.channel);
+    setYoutubeChannelLastOriginal(settingsDoc.data().youtube.last.channel);
+    setYoutubeChannelLastId(settingsDoc.data().youtube.last.channelId);
 
     //youtube
     if (Object.entries(settingsDoc.data().youtube.tokens).length === 0) {
@@ -473,7 +505,7 @@ const Configure = () => {
                 </div>
                 <div className="flex space-x-4">
                   <div className="pl-4">Channel</div>
-                  <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setYoutubeChannelLast)} value={youtubeChannelLast} />
+                  <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleYoutubeChannelChange(e, 'last')} value={youtubeChannelLast} />
                 </div>
 
                 {/* separator between widgets */}
@@ -490,7 +522,7 @@ const Configure = () => {
                 </div>
                 <div className="flex space-x-4">
                   <div className="pl-4">Channel</div>
-                  <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setYoutubeChannelStats)} value={youtubeChannelStats} />
+                  <input type="text" className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleYoutubeChannelChange(e, 'stats')} value={youtubeChannelStats} />
                 </div>
               </>
             ) : (
