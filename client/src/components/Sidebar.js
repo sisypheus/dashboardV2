@@ -91,10 +91,10 @@ const Sidebar = ({ user, setSettings, settings }) => {
           <div className="container">
             <p className="text-sidebar">Nasa</p>
             <div className="contain-switch">
-              <label className="switch">
-                <input type="checkbox" onChange={handleChangeNasa} checked={settings?.nasa?.display ?? false}/>
-                <span className="slider round"></span>
-              </label>
+            <label className="switch">
+              <input type="checkbox" onChange={handleChangeNasa} checked={settings?.nasa?.display ?? false}/>
+              <span className="slider round"></span>
+            </label>
             </div>
           </div>
           <div className="container">
