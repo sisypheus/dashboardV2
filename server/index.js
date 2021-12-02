@@ -36,9 +36,15 @@ app.get('/', (req, res) => {
 
 app.get('/about.json', (req, res) => {
   console.log(req.ip.toString());
+  let ip;
+  if (req.ip.toString().startsWith('::ffff:')) {
+    console.log('here');
+    ip = req.ip.toString().substring(7);
+  } else
+    ip = req.ip.toString();
   res.json({
     client: {
-      host: req.ip
+      host: ip,
     },
     server: {
       current_time: (new Date().getTime() / 1000).toString().split('.')[0],
