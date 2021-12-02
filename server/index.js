@@ -1,15 +1,15 @@
-import express from 'express';
-const app = express();
 import dotenv from 'dotenv';
-
-import weatherRoutes from './routes/services/weather.js';
+import express from 'express';
 import currencyRoutes from './routes/services/currency.js';
 import githubRoutes from './routes/services/github.js';
-import redditRoutes from './routes/services/reddit.js';
-import youtubeRoutes from './routes/services/youtube.js';
+import intraRoutes from './routes/services/intra.js';
 import nasaRoutes from './routes/services/nasa.js';
 import quoteRoutes from './routes/services/quotes.js';
-import intraRoutes from './routes/services/intra.js';
+import redditRoutes from './routes/services/reddit.js';
+import weatherRoutes from './routes/services/weather.js';
+import youtubeRoutes from './routes/services/youtube.js';
+const app = express();
+
 
 dotenv.config();
 

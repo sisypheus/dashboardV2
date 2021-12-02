@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react'
-import { auth, db } from '../firebase';
-import { getDoc, doc, setDoc, updateDoc } from '@firebase/firestore';
-import Background from '../utils/Background';
-import Navbar from '../components/Navbar';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import { doc, setDoc } from '@firebase/firestore';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { auth, db } from '../firebase';
+import Background from '../utils/Background';
 
 const Youtube = () => {
   const [user, setUser] = useState('');

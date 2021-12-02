@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import { auth, db } from '../../firebase';
-import { setDoc, getDoc, doc } from '@firebase/firestore';
+import { doc, setDoc } from '@firebase/firestore';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { db } from '../../firebase';
 
 const Reddit = ({display, subreddit, posts, token, uid, refresh}) => {
   const [edito, setPosts] = useState([]);

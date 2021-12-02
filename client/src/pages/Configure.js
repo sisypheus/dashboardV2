@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import Background from '../utils/Background';
+import { Snackbar } from '@mui/material';
+import axios from 'axios';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import Navbar from '../components/Navbar';
 import { auth, db } from '../firebase';
-import { getDoc, doc, updateDoc, setDoc } from 'firebase/firestore';
-import { useHistory } from 'react-router';
-import { circularProgressClasses, Snackbar } from '@mui/material';
-import axios from 'axios';
+import Background from '../utils/Background';
 import './switch.css';
 
 const Configure = () => {

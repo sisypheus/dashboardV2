@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import { db } from '../firebase';
-import { auth } from '../firebase';
-import { useHistory } from 'react-router';
+import { doc, setDoc } from '@firebase/firestore';
 import { LockClosedIcon } from "@heroicons/react/solid";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth';
-import { collection, getDoc, addDoc, setDoc, doc } from '@firebase/firestore';
+import Snackbar from '@mui/material/Snackbar';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import { auth, db } from '../firebase';
 import Background from '../utils/Background';
 
 const Auth = () => {

@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import RGL, { WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import '../index.css';
-import RGL, { WidthProvider } from 'react-grid-layout';
-import Weather from './widgets/Weather';
 import Currency from './widgets/Currency';
 import Github from './widgets/Github';
+import Intra from './widgets/Intra';
 import Nasa from './widgets/Nasa';
-import { YoutubeLast, YoutubeStats } from './widgets/Youtube';
 import { QuoteDay, QuoteRandom } from './widgets/Quote';
 import Reddit from './widgets/Reddit';
-import Intra from './widgets/Intra';
+import Weather from './widgets/Weather';
+import { YoutubeLast, YoutubeStats } from './widgets/Youtube';
 
 const Widgets = ({ settings, uid }) => {
   const ReactGridLayout = WidthProvider(RGL);
@@ -21,7 +21,7 @@ const Widgets = ({ settings, uid }) => {
     { i: 'github', x: 9, y: 0, w: settings?.github?.widget === 'Contributions' ? 11 : (settings?.github?.widget === 'Pinned' ? 6 : 5 ), h: settings?.github?.widget === 'Contributions' ? 5 : (settings?.github?.widget === 'Profile' ? 4 : 11) },
     { i: 'nasa', x: 0, y:8, w: 6, h: 8 },
     { i: 'youtube_stats', x: 20, y: 0, w: 6, h: 7 },
-    { i: 'youtube_last', x: 9, y: 8, w: 4, h: 5 },
+    { i: 'youtube_last', x: 9, y: 8, w: 5, h: 9 },
     { i: 'reddit', x: 15, y: 5, w: 7, h: 8 },
     { i: 'intra', x: 5, y: 15, w: settings?.intranet?.widget === 'stats' ? 4 : 5, h: settings?.intranet?.widget === 'stats' ? 3 : 6},
     { i: 'quote_day', x: 9, y: 15, w: 4, h: 5 },

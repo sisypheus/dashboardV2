@@ -1,11 +1,10 @@
+import { doc, getDoc } from '@firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { auth, db } from '../firebase';
-import { getDoc, collection, addDoc, doc } from '@firebase/firestore';
-import Background from '../utils/Background';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import Widgets from '../components/Widgets';
+import { auth, db } from '../firebase';
+import Background from '../utils/Background';
 
 const Home = () => {
   const [user, setUser] = useState(null);

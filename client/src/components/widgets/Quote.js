@@ -6,6 +6,7 @@ export const QuoteRandom = ({display, category}) => {
   const [author, setAuthor] = useState('');
 
   useEffect(() => {
+    // IMPORTANT uncomment
     // if (display) {
     //   return getQuote()
     // }
@@ -44,6 +45,7 @@ export const QuoteDay = ({display, category}) => {
   const [author, setAuthor] = useState('');
 
   useEffect(() => {
+    // IMPORTANT uncomment
     // if (display) {
     //   return getQuote()
     // }
