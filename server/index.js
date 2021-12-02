@@ -44,16 +44,108 @@ app.get('/about.json', (req, res) => {
       current_time: (new Date().getTime() / 1000).toString().split('.')[0],
       services: [{
         name: "weather",
-        widgets: "city weather",
-        description: "get the temperature and brief description of current weather in given city",
-        params: [{
-          name: "city",
-          type: "string"
+        widgets: [{
+          name: "current",
+          description: "Current weather in given city",
+          params: [{
+            name: "city",
+            type: "string",
+          }]
         }]
-      }]
+      }, {
+        name: "currency",
+        widgets: [{
+          name: "currency",
+          description: "get the current currency rate of given currency",
+          params: [{
+            name: "from",
+            type: "string",
+          }, {
+            name: "to",
+            type: "string",
+          }]
+        }],
+      }, {
+        name: "github",
+        widgets: [{
+          name: "github",
+          description: "Get either contribution graph, pinned repos, or stats",
+          params: [{
+            name: "type",
+            type: "string",
+          }],
+        }],
+      }, {
+        name: "reddit",
+        widgets: [{
+          name: "reddit",
+          description: "Get best post of given subreddit",
+          params: [{
+            name: "subreddit",
+            type: "string",
+          }, {
+            name: "posts",
+            type: "number",
+          }],
+        }],
+      }, {
+        name: "youtube",
+        widgets: [{
+          name: "last",
+          description: "Get last video of given channel",
+          params: [{
+            name: "channel",
+            type: "string",
+          }]
+        }, {
+          name: "stats",
+          description: "Get stats of given channel",
+          params: [{
+            name: "channel",
+            type: "string",
+          }]
+        }]
+      }, {
+        name: "nasa",
+        widgets: [{
+          name: "picture",
+          description: "Get a picture from nasa",
+          params: [{
+            name: "type",
+            type: "string",
+          }]
+        }]
+      }, {
+        name: "quote",
+        widgets: [{
+          name: "qod",
+          description: "Get quote of the day in given category",
+          params: [{
+            name: "category",
+            type: "string",
+          }]
+        }, {
+          name: "random",
+          description: "Get random quote in given category",
+          params: [{
+            name: "category",
+            type: "string",
+          }]
+        }]
+      }, {
+        name: "intra",
+        widgets: [{
+          name: "intra",
+          description: "Get either notifications or stats",
+          params: [{
+            name: "type",
+            type: "string",
+          }]
+        }]
+      }],
     }
   })
-});
+})
 
 process.on('SIGINT', () => (process.exit(1)));
 
