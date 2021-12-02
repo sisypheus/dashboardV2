@@ -53,6 +53,7 @@ const Configure = () => {
   const [redditLink, setRedditLink] = useState('');
   const [redditSubreddit, setRedditSubreddit] = useState('');
   const [redditPosts, setRedditPosts] = useState(0);
+  const [redditRefresh, setRedditRefresh] = useState(0);
 
   //youtube
   const [youtubeLink, setYoutubeLink] = useState('');
@@ -167,6 +168,7 @@ const Configure = () => {
         },
       },
       reddit: {
+        refresh: redditRefresh,
         display: redditDisplay,
         subreddit: redditSubreddit,
         posts: redditPosts,
@@ -230,6 +232,7 @@ const Configure = () => {
     setRedditToken(settingsDoc.data().reddit.tokens);
     setRedditSubreddit(settingsDoc.data().reddit.subreddit);
     setRedditPosts(settingsDoc.data().reddit.posts);
+    setRedditRefresh(settingsDoc.data().reddit.refresh);
 
     //youtube
     setYoutubeToken(settingsDoc.data().youtube.tokens);
@@ -457,6 +460,15 @@ const Configure = () => {
                     <input type="checkbox" onChange={(e) => handleDisplayChange(e, setRedditDisplay)} checked={redditDisplay}/>
                     <span className="slider round"></span>
                   </label>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>Refresh delay</div>
+                  <select className="border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setRedditRefresh)} value={redditRefresh} >
+                    <option value="1">1 minute</option>
+                    <option value="3">3 minutes</option>
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                  </select>
                 </div>
                 <div className="flex-col space-y-2">
                   <div className="flex space-x-4">
