@@ -10,20 +10,25 @@ router.get('/auth/link', async (req, res) => {
 });
 
 router.get('/token/refresh', async (req, res) => {
-  const {refresh_token} = req.query;
+  const { refresh_token } = req.query;
 
   console.log(refresh_token, 'refresh token');
-  const response = await fetch('https://www.reddit.com/api/v1/access_token', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Basic ${Buffer.from(`${process.env.REDDIT_CLIENT_ID}:${process.env.REDDIT_CLIENT_SECRET}`).toString('base64')}`,
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `grant_type=refresh_token&refresh_token=${refresh_token}`
-  }).then(res => res.json()).then(data => {
-    data.expires_in = ((data.expires_in + new Date().getTime() / 1000)).toString().split('.')[0];
-    res.send(data);
-  });
+  try {
+    const response = await fetch('https://www.reddit.com/api/v1/access_token', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${Buffer.from(`${process.env.REDDIT_CLIENT_ID}:${process.env.REDDIT_CLIENT_SECRET}`).toString('base64')}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `grant_type=refresh_token&refresh_token=${refresh_token}`
+    }).then(res => res.json()).then(data => {
+      data.expires_in = ((data.expires_in + new Date().getTime() / 1000)).toString().split('.')[0];
+      res.send(data);
+    });
+  } catch (e) {
+    console.log(e);
+    res.send({ error: 'Something went wrong' });
+  }
 })
 
 router.get('/auth/fetch_code', async (req, res) => {
@@ -36,34 +41,39 @@ router.get('/auth/fetch_code', async (req, res) => {
   })
 
   const credentials = Buffer.from(`${process.env.REDDIT_CLIENT_ID}:${process.env.REDDIT_CLIENT_SECRET}`).toString('base64');
-  fetch('https://www.reddit.com/api/v1/access_token', { 
+  fetch('https://www.reddit.com/api/v1/access_token', {
     method: "POST",
     headers: {
       Authorization: `Basic ${credentials}`
     },
     body: form
-    }).then(response => 
-      response.json()
-    ).then(data => {
-      data.expires_in = ((data.expires_in + new Date().getTime() / 1000)).toString().split('.')[0];
-      res.send(data)
-    }
-    ).catch(error => res.send({err: error}));
+  }).then(response =>
+    response.json()
+  ).then(data => {
+    data.expires_in = ((data.expires_in + new Date().getTime() / 1000)).toString().split('.')[0];
+    res.send(data)
+  }
+  ).catch(error => res.send({ err: error }));
 })
 
 router.get('/subreddit', async (req, res) => {
   const { token, subreddit, number } = req.query;
 
-  fetch(`https://oauth.reddit.com/r/${subreddit}/best?limit=${number}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    res.send(data)
-  }).catch(error => res.send({err: error}));
+  try {
+    fetch(`https://oauth.reddit.com/r/${subreddit}/best?limit=${number}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        res.send(data)
+      }).catch(error => res.send({ err: error }));
+  } catch (e) {
+    console.log(e);
+    res.send({ err: 'Something went wrong' });
+  }
 });
 
 export default router;

@@ -1,14 +1,20 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 
-const Intra = ({display, widget, token}) => {
+const Intra = ({ refresh, display, widget, token}) => {
   const [user, setUser] = useState({});
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     if (display && token) {
-      return getIntra()
+      getIntra()
     }
+    const interval = setInterval(() => {
+      if (display && token) {
+        getIntra()
+      }
+    }, refresh * 1000 * 60);
+    return () => clearInterval(interval);
   }, [])
   
   const getIntra = async () => {

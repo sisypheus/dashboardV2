@@ -2,20 +2,25 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { GiMoneyStack } from 'react-icons/gi';
 
-const Currency = ({ from, to, display }) => {
+const Currency = ({ refresh, from, to, display }) => {
   const [rate, setRate] = useState(null);
 
   useEffect(() => {
-    let isCancelled = false;
-    axios.get(process.env.REACT_APP_API + '/service/currency/rates?pair1=' + from + '&pair2=' + to)
-      .then(res => {
-        if (!isCancelled)
-          setRate(res.data.rate);
-      })
-    return () => {
-      isCancelled = true;
+    if (display)
+      getRate();
+    if (refresh) {
+      const interval = setInterval(() => {
+        if (display)
+        getRate();
+      }, refresh * 1000 * 60);
+      return () => clearInterval(interval);
     }
   }, [])
+
+  const getRate = async () => {
+    const res = await axios.get(process.env.REACT_APP_API + '/service/currency/rates?pair1=' + from + '&pair2=' + to);
+    setRate(res.data.rate);
+  }
 
   return (
     <>

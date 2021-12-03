@@ -8,7 +8,6 @@ const Reddit = ({display, subreddit, posts, token, uid, refresh}) => {
 
   useEffect(() => {
     if (display && token) {
-      console.log('ici');
       getReddit()
     }
     const interval = setInterval(() => {

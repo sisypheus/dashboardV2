@@ -16,36 +16,43 @@ const Configure = () => {
   //weather
   const [weatherDisplay, setWeatherDisplay] = useState(false);
   const [weatherCity, setWeatherCity] = useState('');
+  const [weatherRefresh, setWeatherRefresh] = useState(0);
 
   //currency
   const [currencyDisplay, setCurrencyDisplay] = useState(false);
   const [currencyFrom, setCurrencyFrom] = useState('');
   const [currencyTo, setCurrencyTo] = useState('');
   const [currencies, setCurrencies] = useState([]);
+  const [currencyRefresh, setCurrencyRefresh] = useState(0);
 
   //github
   const [githubToken, setGithubToken] = useState(null);
   const [githubDisplay, setGithubDisplay] = useState(false);
   const [githubWidget, setGithubWidget] = useState('');
+  const [githubRefresh, setGithubRefresh] = useState(0);
 
   //nasa
   const [nasaDisplay, setNasaDisplay] = useState(false);
   const [nasaWidget, setNasaWidget] = useState('');
+  const [nasaRefresh, setNasaRefresh] = useState(0);
 
   //quotes
   const [quoteCategories, setQuoteCategories] = useState([]);
   //random
   const [randomDisplay, setRandomDisplay] = useState(false);
   const [randomCategory, setRandomCategory] = useState('');
+  const [randomRefresh, setRandomRefresh] = useState(0);
   //qod
   const [qodDisplay, setQodDisplay] = useState(false);
   const [qodCategory, setQodCategory] = useState('');
+  const [qodRefresh, setQodRefresh] = useState(0);
 
   //intranet
   const [intranetDisplay, setIntranetDisplay] = useState(false);
   const [intranetTokenPresent, setIntranetTokenPresent] = useState(false);
   const [intranetToken, setIntranetToken] = useState('');
   const [intranetWidget, setIntranetWidget] = useState('');
+  const [intranetRefresh, setIntranetRefresh] = useState(0);
 
   //reddit
   const [redditDisplay, setRedditDisplay] = useState(false);
@@ -63,11 +70,13 @@ const Configure = () => {
   const [youtubeChannelLastOriginal, setYoutubeChannelLastOriginal] = useState('');
   const [youtubeChannelLastId, setYoutubeChannelLastId] = useState('');
   const [youtubeChannelLast, setYoutubeChannelLast] = useState('');
+  const [youtubeLastRefresh, setYoutubeLastRefresh] = useState(0);
   //statistics of channel
   const [youtubeDisplayStats, setYoutubeDisplayStats] = useState(false);
   const [youtubeChannelStatsOriginal, setYoutubeChannelStatsOriginal] = useState('');
   const [youtubeChannelStats, setYoutubeChannelStats] = useState('');
   const [youtubeChannelStatsId, setYoutubeChannelStatsId] = useState('');
+  const [youtubeStatsRefresh, setYoutubeStatsRefresh] = useState(0);
 
   //snackbar
   const [settingsChanged, setSettingsChanged] = useState(false);
@@ -136,33 +145,40 @@ const Configure = () => {
     }
     await setDoc(settingsRef, {
       weather: {
+        refresh: weatherRefresh,
         display: weatherDisplay,
         city: weatherCity,
       },
       currency: {
+        refresh: currencyRefresh,
         display: currencyDisplay,
         from: currencyFrom,
         to: currencyTo
       },
       github: {
+        refresh: githubRefresh,
         display: githubDisplay,
         widget: githubWidget
       },
       intranet: {
+        refresh: intranetRefresh,
         display: intranetDisplay,
         token: intranetToken,
         widget: intranetWidget,
       },
       nasa: {
+        refresh: nasaRefresh,
         display: nasaDisplay,
         widget: nasaWidget,
       },
       quote: {
         random: {
+          refresh: randomRefresh,
           display: randomDisplay,
           category: randomCategory,
         },
         qod: {
+          refresh: qodRefresh,
           display: qodDisplay,
           category: qodCategory,
         },
@@ -175,11 +191,13 @@ const Configure = () => {
       },
       youtube: {
         last: {
+          refresh: youtubeLastRefresh,
           channelId: channelIdLast ? channelIdLast : youtubeChannelLastId,
           display: youtubeDisplayLast,
           channel: youtubeChannelLast,
         },
         stats: {
+          refresh: youtubeStatsRefresh,
           channelId: channelIdStats ? channelIdStats : youtubeChannelStatsId,
           display: youtubeDisplayStats,
           channel: youtubeChannelStats,
@@ -198,34 +216,41 @@ const Configure = () => {
     //weather
     setWeatherDisplay(settingsDoc.data().weather.display);
     setWeatherCity(settingsDoc.data().weather.city);
+    setWeatherRefresh(settingsDoc.data().weather.refresh);
 
     //currency
     setCurrencyDisplay(settingsDoc.data().currency.display);
     setCurrencyFrom(settingsDoc.data().currency.from);
     setCurrencyTo(settingsDoc.data().currency.to);
+    setCurrencyRefresh(settingsDoc.data().currency.refresh);
 
     //github
     setGithubToken(settingsDoc.data().github.token);
     setGithubDisplay(settingsDoc.data().github.display);
     setGithubWidget(settingsDoc.data().github.widget);
+    setGithubRefresh(settingsDoc.data().github.refresh);
 
     //nasa
     setNasaDisplay(settingsDoc.data().nasa.display);
     setNasaWidget(settingsDoc.data().nasa.widget);
+    setNasaRefresh(settingsDoc.data().nasa.refresh);
 
     //quotes
     //random widget
     setRandomDisplay(settingsDoc.data().quote.random.display);
     setRandomCategory(settingsDoc.data().quote.random.category);
+    setRandomRefresh(settingsDoc.data().quote.random.refresh);
     //qod widget
     setQodDisplay(settingsDoc.data().quote.qod.display);
     setQodCategory(settingsDoc.data().quote.qod.category);
+    setQodRefresh(settingsDoc.data().quote.qod.refresh);
 
     //intranet
     setIntranetDisplay(settingsDoc.data().intranet.display);
     setIntranetTokenPresent(settingsDoc.data().intranet.token !== '');
     setIntranetToken(settingsDoc.data().intranet.token);
     setIntranetWidget(settingsDoc.data().intranet.widget);
+    setIntranetRefresh(settingsDoc.data().intranet.refresh);
 
     //reddit
     setRedditDisplay(settingsDoc.data().reddit.display);
@@ -241,11 +266,13 @@ const Configure = () => {
     setYoutubeChannelStats(settingsDoc.data().youtube.stats.channel);
     setYoutubeChannelStatsOriginal(settingsDoc.data().youtube.stats.channel);
     setYoutubeChannelStatsId(settingsDoc.data().youtube.stats.channelId);
+    setYoutubeStatsRefresh(settingsDoc.data().youtube.stats.refresh);
     //last video from channel
     setYoutubeDisplayLast(settingsDoc.data().youtube.last.display);
     setYoutubeChannelLast(settingsDoc.data().youtube.last.channel);
     setYoutubeChannelLastOriginal(settingsDoc.data().youtube.last.channel);
     setYoutubeChannelLastId(settingsDoc.data().youtube.last.channelId);
+    setYoutubeLastRefresh(settingsDoc.data().youtube.last.refresh);
 
     //youtube
     if (Object.entries(settingsDoc.data().youtube.tokens).length === 0) {
@@ -280,9 +307,18 @@ const Configure = () => {
             <div className="flex items-center justify-between">
               <div>Display widget</div>
               <label className="switch">
-                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setWeatherDisplay)} checked={weatherDisplay}/>
+                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setWeatherDisplay)} checked={weatherDisplay} />
                 <span className="slider round"></span>
               </label>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>Refresh delay</div>
+              <select className="border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setWeatherRefresh)} value={weatherRefresh} >
+                <option value="1">1 minute</option>
+                <option value="3">3 minutes</option>
+                <option value="5">5 minutes</option>
+                <option value="10">10 minutes</option>
+              </select>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">City</div>
@@ -297,9 +333,18 @@ const Configure = () => {
             <div className="flex items-center justify-between">
               <div>Display widget</div>
               <label className="switch">
-                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setCurrencyDisplay)} checked={currencyDisplay}/>
+                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setCurrencyDisplay)} checked={currencyDisplay} />
                 <span className="slider round"></span>
               </label>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>Refresh delay</div>
+              <select className="border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setCurrencyRefresh)} value={currencyRefresh} >
+                <option value="1">1 minute</option>
+                <option value="3">3 minutes</option>
+                <option value="5">5 minutes</option>
+                <option value="10">10 minutes</option>
+              </select>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">From</div>
@@ -330,9 +375,18 @@ const Configure = () => {
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
                   <label className="switch">
-                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setGithubDisplay)} checked={githubDisplay}/>
+                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setGithubDisplay)} checked={githubDisplay} />
                     <span className="slider round"></span>
                   </label>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>Refresh delay</div>
+                  <select className="border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setGithubRefresh)} value={githubRefresh} >
+                    <option value="1">1 minute</option>
+                    <option value="3">3 minutes</option>
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                  </select>
                 </div>
                 <div className="flex space-x-4">
                   <div>Widget type</div>
@@ -362,9 +416,18 @@ const Configure = () => {
             <div className="flex items-center justify-between">
               <div>Display widget</div>
               <label className="switch">
-                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setNasaDisplay)} checked={nasaDisplay}/>
+                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setNasaDisplay)} checked={nasaDisplay} />
                 <span className="slider round"></span>
               </label>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>Refresh delay</div>
+              <select className="border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setNasaRefresh)} value={nasaRefresh} >
+                <option value="1">1 minute</option>
+                <option value="3">3 minutes</option>
+                <option value="5">5 minutes</option>
+                <option value="10">10 minutes</option>
+              </select>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">Type</div>
@@ -383,9 +446,18 @@ const Configure = () => {
             <div className="flex items-center justify-between">
               <div>Display widget</div>
               <label className="switch">
-                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setRandomDisplay)} checked={randomDisplay}/>
+                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setRandomDisplay)} checked={randomDisplay} />
                 <span className="slider round"></span>
               </label>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>Refresh delay</div>
+              <select className="border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setRandomRefresh)} value={randomRefresh} >
+                <option value="1">1 minute</option>
+                <option value="3">3 minutes</option>
+                <option value="5">5 minutes</option>
+                <option value="10">10 minutes</option>
+              </select>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">Category</div>
@@ -404,9 +476,18 @@ const Configure = () => {
             <div className="flex items-center justify-between">
               <div>Display widget</div>
               <label className="switch">
-                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setQodDisplay)} checked={qodDisplay}/>
+                <input type="checkbox" onChange={(e) => handleDisplayChange(e, setQodDisplay)} checked={qodDisplay} />
                 <span className="slider round"></span>
               </label>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>Refresh delay</div>
+              <select className="border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setQodRefresh)} value={qodRefresh} >
+                <option value="1">1 minute</option>
+                <option value="3">3 minutes</option>
+                <option value="5">5 minutes</option>
+                <option value="10">10 minutes</option>
+              </select>
             </div>
             <div className="flex space-x-4">
               <div className="pl-4">Category</div>
@@ -427,9 +508,18 @@ const Configure = () => {
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
                   <label className="switch">
-                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setIntranetDisplay)} checked={intranetDisplay}/>
+                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setIntranetDisplay)} checked={intranetDisplay} />
                     <span className="slider round"></span>
                   </label>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>Refresh delay</div>
+                  <select className="border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setIntranetRefresh)} value={intranetRefresh} >
+                    <option value="1">1 minute</option>
+                    <option value="3">3 minutes</option>
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                  </select>
                 </div>
                 <div className="flex space-x-4">
                   <div className="pl-4">Widget</div>
@@ -457,7 +547,7 @@ const Configure = () => {
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
                   <label className="switch">
-                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setRedditDisplay)} checked={redditDisplay}/>
+                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setRedditDisplay)} checked={redditDisplay} />
                     <span className="slider round"></span>
                   </label>
                 </div>
@@ -510,9 +600,18 @@ const Configure = () => {
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
                   <label className="switch">
-                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayLast)} checked={youtubeDisplayLast}/>
+                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayLast)} checked={youtubeDisplayLast} />
                     <span className="slider round"></span>
                   </label>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>Refresh delay</div>
+                  <select className="border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setYoutubeStatsRefresh)} value={youtubeStatsRefresh} >
+                    <option value="1">1 minute</option>
+                    <option value="3">3 minutes</option>
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                  </select>
                 </div>
                 <div className="flex space-x-4">
                   <div className="pl-4">Channel</div>
@@ -527,9 +626,18 @@ const Configure = () => {
                 <div className="flex items-center justify-between">
                   <div>Display widget</div>
                   <label className="switch">
-                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayStats)} checked={youtubeDisplayStats}/>
+                    <input type="checkbox" onChange={(e) => handleDisplayChange(e, setYoutubeDisplayStats)} checked={youtubeDisplayStats} />
                     <span className="slider round"></span>
                   </label>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>Refresh delay</div>
+                  <select className="border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setYoutubeLastRefresh)} value={youtubeLastRefresh} >
+                    <option value="1">1 minute</option>
+                    <option value="3">3 minutes</option>
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                  </select>
                 </div>
                 <div className="flex space-x-4">
                   <div className="pl-4">Channel</div>

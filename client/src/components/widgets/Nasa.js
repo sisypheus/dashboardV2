@@ -2,13 +2,22 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 
-const Nasa = ({ display, widget }) => {
+const Nasa = ({ refresh, display, widget }) => {
   const [type, setType] = useState('');
   const [data, setData] = useState({});
 
   useEffect(() => {
     if (display) {
-      return getNasa()
+      getNasa()
+    }
+    if (refresh) {
+      const interval = setInterval(() => {
+        console.log('refresh nasa widget');
+        if (display) {
+          getNasa();
+        }
+      }, refresh * 1000 * 60);
+      return () => clearInterval(interval);
     }
   }, []);
 

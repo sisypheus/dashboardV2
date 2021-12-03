@@ -56,34 +56,34 @@ const Widgets = ({ settings, uid }) => {
       ) : (
         <ReactGridLayout isBounded={true} className="layout" margin={[15,15]} layout={getLayout()} cols={24} rowHeight={24}>
           <div key="weather">
-            <Weather city={settings?.weather?.city} display={settings?.weather?.display}/>
+            <Weather refresh={settings?.weather?.refresh} city={settings?.weather?.city} display={settings?.weather?.display}/>
           </div>
           <div key="currency">
-            <Currency from={settings?.currency?.from} to={settings?.currency?.to} display={settings?.currency?.display} />
+            <Currency refresh={settings?.currency?.refresh} from={settings?.currency?.from} to={settings?.currency?.to} display={settings?.currency?.display} />
           </div>
           <div key="github">
-            <Github token={settings?.github?.token} display={settings?.github?.display} widget={settings?.github?.widget}/>
+            <Github refresh={settings?.github?.refresh} token={settings?.github?.token} display={settings?.github?.display} widget={settings?.github?.widget}/>
           </div>
           <div key="nasa">
-            <Nasa display={settings?.nasa?.display} widget={settings?.nasa?.widget}/>
+            <Nasa refresh={settings?.nasa?.refresh} display={settings?.nasa?.display} widget={settings?.nasa?.widget}/>
           </div>
           <div key="intra">
-            <Intra display={settings?.intranet?.display} widget={settings?.intranet?.widget} token={settings?.intranet?.token}/>
+            <Intra refresh={settings?.intranet?.refresh} display={settings?.intranet?.display} widget={settings?.intranet?.widget} token={settings?.intranet?.token}/>
           </div>
           <div key="quote_random">
-            <QuoteRandom display={settings?.quote?.random?.display} category={settings?.quote?.random?.category}/>
+            <QuoteRandom refresh={settings?.quote?.random?.refresh} display={settings?.quote?.random?.display} category={settings?.quote?.random?.category}/>
           </div>
           <div key="quote_day">
-            <QuoteDay display={settings?.quote?.qod?.display} category={settings?.quote?.qod?.category}/>
+            <QuoteDay refresh={settings?.quote?.qod?.refresh} display={settings?.quote?.qod?.display} category={settings?.quote?.qod?.category}/>
           </div>
           <div key="reddit">
             <Reddit uid={uid} refresh={settings?.reddit?.refresh} display={settings?.reddit?.display} subreddit={settings?.reddit?.subreddit} posts={settings?.reddit?.posts} token={settings?.reddit?.tokens}/>
           </div>
           <div key="youtube_stats">
-            <YoutubeStats display={settings?.youtube?.stats?.display} channelId={settings?.youtube?.stats?.channelId} channel={settings?.youtube?.stats?.channel} token={settings?.youtube?.tokens}/>
+            <YoutubeStats refresh={settings?.youtube?.stats?.refresh} display={settings?.youtube?.stats?.display} channelId={settings?.youtube?.stats?.channelId} channel={settings?.youtube?.stats?.channel} token={settings?.youtube?.tokens}/>
           </div>
           <div key="youtube_last">
-            <YoutubeLast display={settings?.youtube?.last?.display} channelId={settings?.youtube?.last?.channelId} channel={settings?.youtube?.last?.channel} token={settings?.youtube?.tokens}/>
+            <YoutubeLast refresh={settings?.youtube?.last?.refresh} display={settings?.youtube?.last?.display} channelId={settings?.youtube?.last?.channelId} channel={settings?.youtube?.last?.channel} token={settings?.youtube?.tokens}/>
           </div>
         </ReactGridLayout>
       )}

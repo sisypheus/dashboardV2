@@ -1,15 +1,21 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-export const YoutubeStats = ({ display, channel, token, channelId }) => {
+export const YoutubeStats = ({ refresh, display, channel, token, channelId }) => {
   const [stats, setStats] = useState({});
   const [error, setError] = useState(false);
 
   useEffect(() => {
     // IMPORTANT uncomment
     // if (display && token) {
-    //   return getYoutube()
+    //   getYoutube()
     // }
+    // const interval = setInterval(() => {
+    //   if (display && token) {
+    //     getYoutube()
+    //   }
+    // }, refresh * 1000 * 60);
+    // return () => clearInterval(interval);
   }, [])
 
   const getYoutube = async () => {
@@ -53,14 +59,21 @@ export const YoutubeStats = ({ display, channel, token, channelId }) => {
   )
 }
 
-export const YoutubeLast = ({ display, channel, token, channelId }) => {
+export const YoutubeLast = ({ refresh, display, channel, token, channelId }) => {
   const [last, setLast] = useState({});
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (display) {
-      return getYoutube()
+    if (display && token) {
+      getYoutube()
     }
+    const interval = setInterval(() => {
+      console.log('refreshing youtube last widget');
+      if (display && token) {
+        getYoutube()
+      }
+    }, refresh * 1000 * 60);
+    return () => clearInterval(interval);
   }, [])
 
   const getYoutube = async () => {
