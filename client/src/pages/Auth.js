@@ -52,20 +52,19 @@ const Auth = () => {
         alert(error.message);
       });
       setOpen(true);
-      await sendEmailVerification(signUpData.user).then(() => {
+      await sendEmailVerification(signUpData.user).then(async () => {
         let interval = setInterval(() => {
           signUpData.user.reload().then(async () => {
             if (signUpData.user.emailVerified) {
               clearInterval(interval);
               await createUser(signUpData.user, name);
-              history.push('/');
+              setLoginIn(false);
             } else {
               console.log('email not verified');
             }
           });
         }, 1000)
       });
-      setLoginIn(false);
     }
   }
 
