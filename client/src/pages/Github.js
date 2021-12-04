@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { auth, db } from '../firebase';
-import { getDoc, doc, setDoc, updateDoc } from '@firebase/firestore';
-import Background from '../utils/Background';
+import { doc, setDoc } from '@firebase/firestore';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { auth, db } from '../firebase';
+import Background from '../utils/Background';
 
 const GithubToken = () => {
   const [user, setUser] = useState('');

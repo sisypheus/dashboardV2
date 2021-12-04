@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const Github = ({ display, token, widget }) => {
+const Github = ({ refresh, display, token, widget }) => {
   const [username, setUsername] = useState('');
   const [repos, setRepos] = useState([]);
   const [profile, setProfile] = useState({});
 
   useEffect(() => {
     if (display && token) {
-      return getGithub()
+      getGithub()
     }
+    const interval = setInterval(() => {
+      console.log('refresh github widget');
+      if (display && token) {
+        getGithub()
+      }
+    }, refresh * 1000 * 60);
+    return () => clearInterval(interval);
   }, [])
 
   const getGithub = async () => {

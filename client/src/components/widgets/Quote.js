@@ -1,14 +1,21 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react'
 
-export const QuoteRandom = ({display, category}) => {
+export const QuoteRandom = ({ refresh, display, category}) => {
   const [quote, setQuote] = useState('');
   const [author, setAuthor] = useState('');
 
   useEffect(() => {
+    // IMPORTANT uncomment
     // if (display) {
     //   return getQuote()
     // }
+    // const interval = setInterval(() => {
+    //   if (display) {
+    //     getQuote()
+    //   }
+    // }, refresh * 1000 * 60);
+    // return () => clearInterval(interval);
   }, [])
   
   const getQuote = async () => {
@@ -39,14 +46,21 @@ export const QuoteRandom = ({display, category}) => {
   )
 }
 
-export const QuoteDay = ({display, category}) => {
+export const QuoteDay = ({ refresh, display, category}) => {
   const [quote, setQuote] = useState('');
   const [author, setAuthor] = useState('');
 
   useEffect(() => {
+    // IMPORTANT uncomment
     // if (display) {
-    //   return getQuote()
+    //   getQuote()
     // }
+    // const interval = setInterval(() => {
+    //   if (display) {
+    //     getQuote()
+    //   }
+    // }, refresh * 1000 * 60);
+    // return () => clearInterval(interval);
   }, [])
 
   const getQuote = async () => {

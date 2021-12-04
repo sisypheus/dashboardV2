@@ -25,10 +25,21 @@ const getChannelId = async (query, client) => {
   }).then((response) => {
     return response.data.items[0].id.channelId;
   }).catch((err) => {
+    console.log(err);
     return -1;
   });
   return id;
 }
+
+router.get('/channel/id', async (req, res) => {
+  const client = getAuthClient();
+  const channel = req.query.channel;
+  console.log(channel);
+  const tokens = req.query;
+  client.setCredentials(tokens);
+  const id = await getChannelId(channel, client);
+  res.send({id});
+})
 
 router.get('/auth/link', async (req, res) => {
   const url = getAuthClient().generateAuthUrl({
@@ -72,8 +83,9 @@ router.get('/channel/video/last', async (req, res) => {
   const oauth2Client = getAuthClient();
   const tokens = req.query;
   const channel = req.query.channel;
+  const channelId = req.query.channelId;
   oauth2Client.setCredentials(tokens);
-  const channelId = await getChannelId(channel, oauth2Client);
+  // const channelId = await getChannelId(channel, oauth2Client);
 
   if (channelId === -1)
     res.send({err: 'Channel not found'});
@@ -99,8 +111,9 @@ router.get('/channel/stats', async (req, res) => {
   const oauth2Client = getAuthClient();
   const tokens = req.query;
   const channel = req.query.channel;
+  const channelId = req.query.channelId;
   oauth2Client.setCredentials(tokens);
-  const channelId = await getChannelId(channel, oauth2Client);
+  // const channelId = await getChannelId(channel, oauth2Client);
 
   if (channelId === -1)
     res.send({err: 'Channel not found'});
@@ -113,7 +126,7 @@ router.get('/channel/stats', async (req, res) => {
     maxResults: 1
   }, (err, response) => {
     if (err) {
-      console.log(err, 'fdsjqkm');
+      // console.log(err, 'fdsjqkm');
       res.send({err});
     } else {
       if (response.data.pageInfo.totalResults === 0)
