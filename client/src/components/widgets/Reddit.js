@@ -5,6 +5,7 @@ import { db } from '../../firebase';
 
 const Reddit = ({display, subreddit, posts, token, uid, refresh}) => {
   const [edito, setPosts] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (display && token) {
@@ -31,10 +32,14 @@ const Reddit = ({display, subreddit, posts, token, uid, refresh}) => {
       token = res.data;
     }
     const res = await axios.get(process.env.REACT_APP_API + '/service/reddit/subreddit?subreddit=' + subreddit + '&token=' + token.access_token + '&number=' + posts);
+    if (res.data.err)
+      setError(true);
     setPosts(res.data?.data?.children);
   }
 
   const displayWidget = () => {
+    if (error)
+      return <div className="text-text pt-2 text-center">Please authenticate with Reddit in your configuration page</div>;
     return (
       <div className="flex flex-col space-y-2 px-4 my-2 overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-500">
         {edito ? edito.map((post, i) => {
