@@ -14,7 +14,7 @@ The goal of this project is to create a dashboard that will allow the user to se
 
 To get started, clone this repository on your machine.
 
-**First Method**
+***First Method***  
 You'll need to instances of a terminal, one for to run the front end react client, and another to run the backend node server.
 
 You'll first need to install the dependencies, for the client and the server:
@@ -24,22 +24,22 @@ or
 
 Then you'll need to start the server:  
 `npm start`  
-It will launch the process on the port 8080.  
+It will launch the server on port 8080.  
 
 Then you'll need to start the client:  
 `npm start`  
-It will launch the process on the port 3000.  
+It will launch the client on port 3000.  
 
 You're all set !
 
 ***
 
-**Second Method**
+***Second Method***  
 Another way, if you just want to test the application, without installing the dependencies:
 
 Have docker and docker-compose installed on your machine.
 
-Run, at the root of the project, the following command:
+Run, at the root of the project, the following command:  
 `docker-compose build && docker-compose up`
 
 You'll be able to see the application on http://localhost:3000
