@@ -146,16 +146,18 @@ const Auth = () => {
 
   const googleSignin = async () => {
     setLoginIn(true);
-    const data = await signInWithPopup(auth, new GoogleAuthProvider()).catch((err) => {
-      alert(err.message);
-    });
-    const document = doc(db, 'users', data.user.uid);
-    const user = await getDoc(document);
-    if (user.exists())
+    try {
+      const data = await signInWithPopup(auth, new GoogleAuthProvider());
+      const document = doc(db, 'users', data.user.uid);
+      const user = await getDoc(document);
+      if (user.exists())
       setLoginIn(false);
-    else {
-      await createUser(data.user, data.user.displayName);
-      setLoginIn(false);
+      else {
+        await createUser(data.user, data.user.displayName);
+        setLoginIn(false);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 

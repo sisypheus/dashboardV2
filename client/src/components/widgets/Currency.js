@@ -42,7 +42,7 @@ const Currency = ({ refresh, from, to, display }) => {
     { display ? (
       <div key="currency" className="dark:bg-widgets bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
         <p className="text-orange text-2xl tracking-widest font-black">Currency rate</p>
-        <p className="pt-2 text-md text-text">{from} <span className="text-blue-300">→</span> {to}</p>
+        <p className="pt-2 text-md text-text text-center">{from} <span className="text-blue-300 text-center">→</span> {to}</p>
         <p className="pb-2 text-gray-300 text-orange italic">{rate ? parseFloat(rate).toPrecision(4) : rate}</p>
         <GiMoneyStack className="text-3xl text-green" />
     </div>
