@@ -32,7 +32,7 @@ export const YoutubeStats = ({ refresh, display, channel, token, channelId }) =>
 
   const displayWidget = () => {
     if (error)
-      return <div className="text-text pt-2 text-center">Please authenticate with Youtube in your configuration page</div>
+      return <div className="text-text pt-2 text-center px-1">Please authenticate with Youtube in your configuration page</div>
     return (
       <>
       <div class="flex grid-cols-2 gap-1 mx-10 my-2 items-center">
