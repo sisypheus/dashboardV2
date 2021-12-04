@@ -35,7 +35,7 @@ const Intra = ({display, widget, token}) => {
     } else if (widget === 'notifications') {
       const regex = /(<([^>]+)>)/ig;
       return (
-        <div className="flex flex-col space-y-2 px-4 my-2 mr-2 overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-500">
+        <div className="flex flex-col space-y-2 px-4 my-2 mr-2 overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-indigo-300 scrollbar-track-gray-300">
           {notifications.map((notif, index) => {
             const res = notif.replace(regex, '');
             return (
