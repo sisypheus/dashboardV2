@@ -70,7 +70,7 @@ const Nasa = ({ refresh, display, widget }) => {
     <>
       {display &&
         <div key="nasa" className="dark:bg-widgets bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
-          <p className="text-blue text-2xl tracking-widest font-black">Nasa</p>
+          <p className="text-blue text-2xl tracking-widest font-black pt-2">Nasa</p>
           {displayWidget()}
         </div>
       }

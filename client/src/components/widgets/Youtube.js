@@ -6,7 +6,7 @@ export const YoutubeStats = ({ refresh, display, channel, token, channelId }) =>
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // IMPORTANT uncomment
+    //IMPORTANT uncomment
     // if (display && token) {
     //   getYoutube()
     // }
@@ -23,8 +23,10 @@ export const YoutubeStats = ({ refresh, display, channel, token, channelId }) =>
     if (res.data.err) {
       console.log(res.data.err)
       setError(true);
-    } else
+    } else {
       setStats(res.data);
+      setError(false);
+    }
     console.log(res.data)
   }
 
@@ -32,18 +34,17 @@ export const YoutubeStats = ({ refresh, display, channel, token, channelId }) =>
     if (error)
       return <div className="text-text pt-2 text-center">Please authenticate with Youtube in your configuration page</div>
     return (
-      <div className="flex flex-col items-center justify-center text-center">
-        <img src={stats.logo} alt="logo" className="h-1/2 w-auto" />
-        <p>{stats.title}</p>
-        <div className="flex flex-row justify-between">
-          <div className="flex-col flex">
-            <p>{stats.subscribers} <span className="text-blue">subscribers</span></p>
-            <p className="text-blue">subscribers</p>
-          </div>
-          <p>{stats.views} <span className="text-blue">views</span></p>
-          <p>{stats.videos} <span className="text-blue">videos</span></p>
-        </div>
+      <>
+      <div class="flex grid-cols-2 gap-1 mx-10 my-2 items-center">
+        <div><img src={stats.logo} alt="logo" className="h-1/9 w-auto rounded-xl text-right mr-5"/></div>
+        <div><p className="text-blue font-bold text-justify">{stats.title}</p></div>
       </div>
+      <div className="text-center italic">
+        <p className="text-text"><span className="text-blue">{stats.videos}</span> videos</p>
+        <p className="text-text"><span className="text-blue">{stats.subscribers}</span> subscribers</p>
+        <p className="text-text"><span className="text-blue">{stats.views}</span> views</p>
+      </div>
+      </>
     )
   }
 
@@ -92,8 +93,8 @@ export const YoutubeLast = ({ refresh, display, channel, token, channelId }) => 
       return <div className="text-text pt-2 text-center">Please authenticate with Youtube in your configuration page</div>
     return (
       <div className="flex flex-col items-center justify-center text-center">
-        <p className="mt-2">{last?.snippet?.title}</p>
-        <a href={'https://youtube.com/watch?v=' + last?.id?.videoId} target="_blank" rel="noopener noreferrer">
+        <p className="mt-2 text-saumon">{last?.snippet?.title}</p>
+        <a href={'https://youtube.com/watch?v=' + last?.id?.videoId} target="_blank" rel="noopener noreferrer" className=" w-full h-full overflow-hidden object-fit">
           <img src={last?.snippet?.thumbnails?.medium?.url} alt="thumbnail" className="rounded-lg" />
         </a>
       </div>
@@ -104,7 +105,7 @@ export const YoutubeLast = ({ refresh, display, channel, token, channelId }) => 
     <>
       {display &&
         <div key="youtube_last" className="dark:bg-widgets bg-gray-200 shadow-lg h-full w-full rounded-xl flex flex-col items-center justify-center">
-          <p className="text-saumon text-2xl tracking-widest font-black">Youtube Last</p>
+          <p className="text-saumon text-2xl tracking-widest font-black pt-2">Youtube Last</p>
           {displayWidget()}
         </div>
       }
