@@ -10,6 +10,38 @@
 The goal of this project is to create a dashboard that will allow the user to see the status of the different services like the weather at a certain city, the exchange rate between two currencies, the last video from a youtube channel...  
 **All in one place !**
 
+## **Development**
+
+To get started, clone this repository on your machine.
+
+You'll need to instances of a terminal, one for to run the front end react client, and another to run the backend node server.
+
+You'll first need to install the dependencies, for the client and the server:
+`npm install`
+or
+`yarn install`
+
+Then you'll need to start the server:
+`npm start`
+It will launch the process on the port 8080.
+
+Then you'll need to start the client:
+`npm start`
+It will launch the process on the port 3000.
+
+You're all set !
+
+***
+
+Another way, if you just want to test the application, without installing the dependencies:
+
+Have docker and docker-compose installed on your machine.
+
+Run, at the root of the project, the following command:
+`docker-compose build && docker-compose up`
+
+You'll be able to see the application on http://localhost:3000
+
 ## **Services**
 
 For this dashboard, we provide the following services and associated widgets:
