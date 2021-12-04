@@ -1,30 +1,44 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, createFactory } from 'react'
 import axios from 'axios'
 
 const Weather = ({ refresh, display, city }) => {
   const [weather, setWeather] = useState({});
-  if (!city) {
-    city = 'Lille'
-  }
 
   useEffect(() => {
-    if (display)
-      getWeather()
+    const source = axios.CancelToken.source();
+    if (display) {
+      getWeather(source);
+    }
     if (refresh) {
       const interval = setInterval(() => {
         console.log('refresh weather widget')
         if (display)
-          getWeather()
+          getWeather(null)
       }, refresh * 1000 * 60);
       return () => {
         clearInterval(interval);
+        source.cancel();
       }
+    }
+    return () => {
+      source.cancel();
     }
   }, []);
 
-  const getWeather = async () => {
-    const res = await axios.get(process.env.REACT_APP_API + '/service/weather/' + city);
-    setWeather(res.data);
+  const getWeather = async (source) => {
+    if (source) {
+      try {
+        const res = await axios.get(process.env.REACT_APP_API + '/service/weather/' + city, {
+          cancelToken: source.token
+        });
+        setWeather(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      const res = await axios.get(process.env.REACT_APP_API + '/service/weather/' + city);
+      setWeather(res.data);
+    }
   }
 
   return (

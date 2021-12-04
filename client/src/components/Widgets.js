@@ -31,6 +31,7 @@ const Widgets = ({ settings, uid }) => {
   const defaultLayout = [
     { i: 'weather', x: 0, y: 0, w: 4, h: 7 },
     { i: 'currency', x: 4, y: 0, w: 3, h: 5 },
+    { i: 'nasa', x: 0, y:8, w: 6, h: 8 },
   ]
 
   const getLayout = () => {
@@ -47,11 +48,14 @@ const Widgets = ({ settings, uid }) => {
       { !settings ? (
         <ReactGridLayout isBounded={true} className="layout" layout={getLayout()} cols={24} rowHeight={24}>
           <div key="weather">
-            <Weather city={'Lille'} display={true}/>
+            <Weather city={'Lille'} display={true} refresh={5}/>
           </div>
           <div key="currency">
-            <Currency from={"USD"} to={"EUR"} display={true} />
+            <Currency from={"USD"} to={"EUR"} display={true} refresh={5}/>
           </div>
+          <div key="nasa">
+            <Nasa display={true} refresh={5} widget={"apod"}/>
+         </div>
         </ReactGridLayout>
       ) : (
         <ReactGridLayout isBounded={true} className="layout" margin={[15,15]} layout={getLayout()} cols={24} rowHeight={24}>

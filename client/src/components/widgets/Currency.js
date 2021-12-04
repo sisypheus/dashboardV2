@@ -6,20 +6,35 @@ const Currency = ({ refresh, from, to, display }) => {
   const [rate, setRate] = useState(null);
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
     if (display)
-      getRate();
+      getRate(source);
     if (refresh) {
       const interval = setInterval(() => {
         if (display)
-        getRate();
+        getRate(source);
       }, refresh * 1000 * 60);
-      return () => clearInterval(interval);
+      return () => {
+        source.cancel();
+        clearInterval(interval);
+      }
     }
+    return () => source.cancel();
   }, [])
 
-  const getRate = async () => {
-    const res = await axios.get(process.env.REACT_APP_API + '/service/currency/rates?pair1=' + from + '&pair2=' + to);
-    setRate(res.data.rate);
+  const getRate = async (source) => {
+    try {
+      const res = await axios.get(process.env.REACT_APP_API + '/service/currency/rates?pair1=' + from + '&pair2=' + to, {
+        cancelToken: source.token
+      });
+      setRate(res.data.rate);
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        console.log('Request canceled', error.message);
+      } else { 
+        console.log(error);
+      }
+    }
   }
 
   return (
