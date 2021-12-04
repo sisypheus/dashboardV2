@@ -36,8 +36,8 @@ const Github = ({ refresh, display, token, widget }) => {
   };
 
   const displayWidget = (widget) => {
-    if (widget === 'Contributions' && !username)
-      return;
+    if (!username)
+      return <div className="text-text pt-2 text-center">Please authenticate with Github in your configuration page</div>;
     switch (widget) {
       case 'Contributions':
         return <img className="px-2 py-1" src={`https://ghchart.rshah.org/${username}`} alt="Github chart" />
