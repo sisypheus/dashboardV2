@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react'
 const Intra = ({ refresh, display, widget, token}) => {
   const [user, setUser] = useState({});
   const [notifications, setNotifications] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (display && token) {
@@ -25,11 +26,15 @@ const Intra = ({ refresh, display, widget, token}) => {
     } else if (widget  === 'notifications') {
       const type = 'notifications';
       const res = await axios.get(process.env.REACT_APP_API + `/service/intra/${type}?autologin=${token}`);
+      if (res.data.err)
+        setError(true);
       setNotifications(res.data);
     }
   }
 
   const displayWidget = (widget) => {
+    if (!token || error === true)
+      return <div className="text-text pt-2 text-center">Please enter your autologin link in your configuration page</div>
     if (widget === 'stats') {
       console.log(user);
       return (
