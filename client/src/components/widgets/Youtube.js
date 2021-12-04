@@ -30,7 +30,7 @@ export const YoutubeStats = ({ refresh, display, channel, token, channelId }) =>
 
   const displayWidget = () => {
     if (error)
-      return <div>Something went wrong</div>
+      return <div className="text-text pt-2 text-center">Please authenticate with Github in your configuration page</div>
     return (
       <div className="flex flex-col items-center justify-center text-center">
         <img src={stats.logo} alt="logo" className="h-1/2 w-auto" />
@@ -89,7 +89,7 @@ export const YoutubeLast = ({ refresh, display, channel, token, channelId }) => 
 
   const displayWidget = () => {
     if (error)
-      return <div>Something went wrong</div>
+      return <div className="text-text pt-2 text-center">Please authenticate with Github in your configuration page</div>
     return (
       <div className="flex flex-col items-center justify-center text-center">
         <p className="mt-2">{last?.snippet?.title}</p>
