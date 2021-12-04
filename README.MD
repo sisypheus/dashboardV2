@@ -22,13 +22,13 @@ You'll first need to install the dependencies, for the client and the server:
 or
 `yarn install`
 
-Then you'll need to start the server:__
-`npm start`__
-It will launch the process on the port 8080.__
+Then you'll need to start the server:  
+`npm start`  
+It will launch the process on the port 8080.  
 
-Then you'll need to start the client:__
-`npm start`__
-It will launch the process on the port 3000.__
+Then you'll need to start the client:  
+`npm start`  
+It will launch the process on the port 3000.  
 
 You're all set !
 
