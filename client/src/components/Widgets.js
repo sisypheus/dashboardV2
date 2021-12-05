@@ -24,7 +24,7 @@ const Widgets = ({ settings, uid }) => {
     { i: 'youtube_last', x: 9, y: 8, w: 5, h: 7 },
     { i: 'reddit', x: 15, y: 5, w: 7, h: 8 },
     { i: 'intra', x: 5, y: 15, w: settings?.intranet?.widget === 'stats' ? 4 : 5, h: settings?.intranet?.widget === 'stats' ? 3 : 6},
-    { i: 'quote_day', x: 9, y: 15, w: 4, h: 5 },
+    { i: 'quote_day', x: 9, y: 15, w: 5, h: 5 },
     { i: 'quote_random', x: 0, y: 22, w: 5, h: 5 },
   ];
 

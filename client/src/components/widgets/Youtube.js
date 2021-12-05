@@ -6,16 +6,15 @@ export const YoutubeStats = ({ refresh, display, channel, token, channelId }) =>
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    //IMPORTANT uncomment
-    // if (display && token) {
-    //   getYoutube()
-    // }
-    // const interval = setInterval(() => {
-    //   if (display && token) {
-    //     getYoutube()
-    //   }
-    // }, refresh * 1000 * 60);
-    // return () => clearInterval(interval);
+    if (display && token) {
+      getYoutube()
+    }
+    const interval = setInterval(() => {
+      if (display && token) {
+        getYoutube()
+      }
+    }, refresh * 1000 * 60);
+    return () => clearInterval(interval);
   }, [])
 
   const getYoutube = async () => {
