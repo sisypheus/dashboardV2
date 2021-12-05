@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 export const QuoteRandom = ({ refresh, display, category }) => {
   const [quote, setQuote] = useState('');
   const [author, setAuthor] = useState('');
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (display) {
@@ -20,16 +21,21 @@ export const QuoteRandom = ({ refresh, display, category }) => {
   const getQuote = async () => {
     const res = await axios.get(process.env.REACT_APP_API + `/service/quote/random/${category}`);
     console.log(res.data.contents);
+    if (res.data.err) {
+      setError(true);
+      return;
+    }
     setAuthor(res.data.contents.author);
     setQuote(res.data.contents.quote);
   }
 
   const displayWidget = () => {
     return (
-      <div className="flex flex-col justify-center items-center px-3 py-1 text-center">
-        <p className="text-sm font-semibold text-text">{quote}</p>
-        <p className="font-semibold text-lg text-saumon">{author}</p>
-      </div>
+      error ? <div>Something went wrong</div> :
+        <div className="flex flex-col justify-center items-center px-3 py-1 text-center">
+          <p className="text-sm font-semibold text-text">{quote}</p>
+          <p className="font-semibold text-lg text-saumon">{author}</p>
+        </div>
     )
   }
 
@@ -48,6 +54,7 @@ export const QuoteRandom = ({ refresh, display, category }) => {
 export const QuoteDay = ({ refresh, display, category }) => {
   const [quote, setQuote] = useState('');
   const [author, setAuthor] = useState('');
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (display) {
@@ -62,18 +69,27 @@ export const QuoteDay = ({ refresh, display, category }) => {
   }, [])
 
   const getQuote = async () => {
-    const res = await axios.get(process.env.REACT_APP_API + `/service/quote/random/${category}`);
-    console.log(res.data.contents);
-    setAuthor(res.data.contents.author);
-    setQuote(res.data.contents.quote);
+    const res = await axios.get(process.env.REACT_APP_API + `/service/quote/qod/${category}`);
+
+    if (res.data.err) {
+      setError(true);
+      return;
+    }
+    try {
+      setAuthor(res.data.contents.quotes[0].author);
+      setQuote(res.data.contents.quotes[0].quote);
+    } catch (e) {
+      setError(true);
+    }
   }
 
   const displayWidget = () => {
     return (
-      <div className="flex flex-col justify-center items-center px-3 py-1 text-center">
-        <p className="text-sm text-text font-semibold">{quote}</p>
-        <p className="font-semibold text-lg text-saumon">{author}</p>
-      </div>
+      error ? <div>Something went wrong</div> :
+        <div className="flex flex-col justify-center items-center px-3 py-1 text-center">
+          <p className="text-sm text-text font-semibold">{quote}</p>
+          <p className="font-semibold text-lg text-saumon">{author}</p>
+        </div>
     )
   }
 

@@ -109,7 +109,7 @@ const Auth = () => {
       quote: {
         qod: {
           refresh: 5,
-          category: "inspirationnal",
+          category: "inspire",
           display: true,
         },
         random: {

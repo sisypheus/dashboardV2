@@ -46,6 +46,7 @@ const Configure = () => {
   const [qodDisplay, setQodDisplay] = useState(false);
   const [qodCategory, setQodCategory] = useState('');
   const [qodRefresh, setQodRefresh] = useState(0);
+  const [quoteQodCategories, setQuoteQodCategories] = useState([]);
 
   //intranet
   const [intranetDisplay, setIntranetDisplay] = useState(false);
@@ -94,6 +95,10 @@ const Configure = () => {
         axios.get(process.env.REACT_APP_API + '/service/quote/categories')
           .then(res => {
             setQuoteCategories(res.data);
+          })
+        axios.get(process.env.REACT_APP_API + '/service/quote/qod/categories')
+          .then(res => {
+            setQuoteQodCategories(res.data);
           })
         setSettingsRef(settingsRef);
         getDoc(userRef).then(userDoc => {
@@ -492,9 +497,10 @@ const Configure = () => {
             <div className="flex space-x-4">
               <div className="pl-4">Category</div>
               <select className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setQodCategory)} value={qodCategory} >
-                {quoteCategories !== [] ? quoteCategories.map(category => (
-                  <option key={category} value={category} >{category}</option>
-                )) : null}
+                {quoteQodCategories !== [] ?
+                  quoteQodCategories.map(category => (
+                    <option key={category} value={category} >{category}</option>
+                  )) : null}
               </select>
             </div>
           </div>
