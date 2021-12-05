@@ -14,10 +14,8 @@ router.get('/categories', async (req, res) => {
 })
 
 router.get('/qod/categories', async (req, res) => {
-  console.log('ici');
   try {
     const response = await axios.get(`https://quotes.rest/qod/categories?api_key=${process.env.QUOTES_API_KEY}`);
-    console.log(response.data);
     res.send(Object.keys(response.data.contents.categories));
   } catch (error) {
     res.send({ err: 'Something went wrong' });

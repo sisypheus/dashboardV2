@@ -38,7 +38,7 @@ router.get('/channel/id', async (req, res) => {
   const tokens = req.query;
   client.setCredentials(tokens);
   const id = await getChannelId(channel, client);
-  res.send({id});
+  res.send({ id });
 })
 
 router.get('/auth/link', async (req, res) => {
@@ -55,7 +55,7 @@ router.get('/auth/token', async (req, res) => {
     const { tokens } = await oauth2Client.getToken(req.query.code);
     res.send(tokens);
   } catch (err) {
-    res.send({err: err});
+    res.send({ err: err });
   }
 })
 
@@ -88,7 +88,7 @@ router.get('/channel/video/last', async (req, res) => {
   // const channelId = await getChannelId(channel, oauth2Client);
 
   if (channelId === -1)
-    res.send({err: 'Channel not found'});
+    res.send({ err: 'Channel not found' });
 
   let service = google.youtube('v3');
   service.search.list({
@@ -100,7 +100,7 @@ router.get('/channel/video/last', async (req, res) => {
     type: 'video'
   }, (err, response) => {
     if (err) {
-      res.send({err});
+      res.send({ err });
     } else {
       res.send(response.data.items[0]);
     }
@@ -116,7 +116,7 @@ router.get('/channel/stats', async (req, res) => {
   // const channelId = await getChannelId(channel, oauth2Client);
 
   if (channelId === -1)
-    res.send({err: 'Channel not found'});
+    res.send({ err: 'Channel not found' });
 
   let service = google.youtube('v3');
   service.channels.list({
@@ -127,12 +127,12 @@ router.get('/channel/stats', async (req, res) => {
   }, (err, response) => {
     if (err) {
       // console.log(err, 'fdsjqkm');
-      res.send({err});
+      res.send({ err });
     } else {
       if (response.data.pageInfo.totalResults === 0)
-        res.send({err: 'Channel not found'});
+        res.send({ err: 'Channel not found' });
       else
-        res.send({logo: response.data.items[0].snippet.thumbnails.default.url, title: response.data.items[0].snippet.title, views: response.data.items[0].statistics.viewCount, subscribers: response.data.items[0].statistics.subscriberCount, videos: response.data.items[0].statistics.videoCount});
+        res.send({ logo: response.data.items[0].snippet.thumbnails.default.url, title: response.data.items[0].snippet.title, views: response.data.items[0].statistics.viewCount, subscribers: response.data.items[0].statistics.subscriberCount, videos: response.data.items[0].statistics.videoCount });
     }
   })
 })

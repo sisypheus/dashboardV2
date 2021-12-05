@@ -38,7 +38,7 @@ router.get('/contributions', async (req, res) => {
     res.json({ err: 'Invalid token' });
     return;
   }
-  res.json({username});
+  res.json({ username });
 })
 
 router.get('/pinned', async (req, res) => {
