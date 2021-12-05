@@ -79,6 +79,9 @@ app.get('/about.json', (req, res) => {
           params: [{
             name: "type",
             type: "string",
+          }, {
+            name: "token",
+            type: "string",
           }],
         }],
       }, {
@@ -92,6 +95,9 @@ app.get('/about.json', (req, res) => {
           }, {
             name: "posts",
             type: "number",
+          }, {
+            name: "token",
+            type: "string",
           }],
         }],
       }, {
@@ -102,12 +108,18 @@ app.get('/about.json', (req, res) => {
           params: [{
             name: "channel",
             type: "string",
+          }, {
+            name: "token",
+            type: "string",
           }]
         }, {
           name: "stats",
           description: "Get stats of given channel",
           params: [{
             name: "channel",
+            type: "string",
+          }, {
+            name: "token",
             type: "string",
           }]
         }]
@@ -145,6 +157,9 @@ app.get('/about.json', (req, res) => {
           description: "Get either notifications or stats",
           params: [{
             name: "type",
+            type: "string",
+          }, {
+            name: "token",
             type: "string",
           }]
         }]
