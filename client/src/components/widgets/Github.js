@@ -36,7 +36,7 @@ const Github = ({ refresh, display, token, widget }) => {
   };
 
   const displayWidget = (widget) => {
-    if (!username)
+    if (!username && widget == 'Contributions')
       return <div className="text-text pt-2 text-center">Please authenticate with Github in your configuration page</div>;
     switch (widget) {
       case 'Contributions':

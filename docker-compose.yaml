@@ -1,14 +1,14 @@
 version: "3.7"
-services: 
+services:
   back:
     build: ./server
-    restart: always
-    ports: 
+    restart: on-failure
+    ports:
       - 8080:8080
-    
+
   front:
     build: ./client
-    restart: always
+    restart: on-failure
     depends_on:
       - back
     ports:
