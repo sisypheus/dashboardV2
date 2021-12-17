@@ -35,8 +35,8 @@ const Home = () => {
       <Navbar />
       <div className="flex">
         <Sidebar user={user} setSettings={setSettings} settings={settings} />
-        
-        <Widgets settings={settings} uid={uid}/>
+
+        <Widgets settings={settings} uid={uid} />
       </div>
     </Background>
   )

@@ -170,5 +170,5 @@ app.get('/about.json', (req, res) => {
 process.on('SIGINT', () => (process.exit(1)));
 
 app.listen(process.env.PORT || 8080, () => {
-  console.log(`Example app listening`);
+  console.log(`Dashboard's server is up and running on port ${process.env.PORT || 8080}`);
 })
