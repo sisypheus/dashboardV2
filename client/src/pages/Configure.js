@@ -467,7 +467,7 @@ const Configure = () => {
             <div className="flex space-x-4">
               <div className="pl-4">Category</div>
               <select className="w-full border-b-2 border-gray-700 bg-gray-600 rounded-md pl-1 text-white" onChange={(e) => handleChange(e, setRandomCategory)} value={randomCategory} >
-                {quoteCategories !== [] ? quoteCategories.map(category => (
+                {quoteCategories.length ? quoteCategories.map(category => (
                   <option key={category} value={category} >{category}</option>
                 )) : null}
               </select>
