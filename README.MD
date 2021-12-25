@@ -5,8 +5,10 @@
 - alizee.soussan@epitech.eu
 - theo.poette@epitech.eu
 
-## **Preview of the finished project**
+## **The finished project**
+The site is deployed at: https://v2-dashboard.netlify.app/
 
+\
 ![Dark mode](/screenshots/dark_mode.png)
 ![Light mode](/screenshots/light_mode.png)
 
